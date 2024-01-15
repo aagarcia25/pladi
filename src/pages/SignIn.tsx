@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
+import { AuthService } from "../services/AuthService";
+import Swal from "sweetalert2";
+import { setItem } from "../services/localStorage";
 const SignIn = () => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -21,7 +24,27 @@ const SignIn = () => {
   const [pass, setPass] = useState("");
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const login = () => {
-    navigate("/home/");
+    let data = {
+      P_Usuario: username,
+      P_Password: pass,
+    };
+    AuthService.login(data).then((res) => {
+      if (res.NUMCODE == 200) {
+        localStorage.clear();
+        setItem(true, "l1");
+        setItem(res.RESPONSE[0], "User");
+        navigate("/home/");
+      } else {
+        localStorage.clear();
+        Swal.fire({
+          title: "Acceso",
+          text: res.STRMESSAGE,
+          icon: "error",
+        });
+      }
+    });
+
+    //navigate("/home/");
   };
   return (
     <div>

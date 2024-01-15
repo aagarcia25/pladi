@@ -7,6 +7,7 @@ import Main from "./components/layout/Main";
 import Home from "./pages/Home";
 import Estatales from "./pages/Auditorias/Estatales/Estatales";
 import Federales from "./pages/Auditorias/Federales/Federales";
+import Inap from "./pages/INAP/Inap";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="Estatales" element={<Estatales />} />
             <Route path="Federales" element={<Federales />} />
+            <Route path="inap" element={<Inap />} />
           </Route>
         </Routes>
       </BrowserRouter>

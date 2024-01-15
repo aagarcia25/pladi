@@ -1,12 +1,18 @@
+import CancelIcon from "@mui/icons-material/Cancel";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   Collapse,
   Container,
   CssBaseline,
   Divider,
+  Grid,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -14,16 +20,11 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import React, { useState } from "react";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import SearchIcon from "@mui/icons-material/Search";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { getItem } from "../../services/localStorage";
 const drawerWidth: number = 280;
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -77,6 +78,7 @@ const Main = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState([false, false, false]);
+  const data = JSON.parse(String(getItem("User"))) as any;
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -87,6 +89,13 @@ const Main = () => {
     updatedMenus[index] = !updatedMenus[index];
     setOpenMenus(updatedMenus);
   };
+
+  const closeSssion = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -151,21 +160,43 @@ const Main = () => {
           </Toolbar>
           <Divider />
 
+          <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            <Grid item xs={1}>
+              {data!.Nombre}
+            </Grid>
+            <Grid item xs={1}>
+              {" "}
+              {data!.Puesto}
+            </Grid>
+            <Grid item xs={1}>
+              {data!.CorreoElectronico}
+            </Grid>
+            <Grid item xs={1}>
+              {" "}
+              {data!.Telefono}
+            </Grid>
+          </Grid>
+
+          <Divider></Divider>
           {/* <List component="nav">
             <ListItemButton onClick={() => navigate("/home/Federales")}>
               <ListItemIcon>
-                <SearchIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Investigación" />
             </ListItemButton>
 
             <Divider sx={{ my: 1 }} />
           </List> */}
-
           <List component="nav">
             <ListItemButton onClick={() => handleClick(0)}>
               <ListItemIcon>
-                <InboxIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Auditorías" />
               {openMenus[0] ? <ExpandLess /> : <ExpandMore />}
@@ -178,7 +209,7 @@ const Main = () => {
                   onClick={() => navigate("/home/Federales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Federales" />
                 </ListItemButton>
@@ -188,7 +219,7 @@ const Main = () => {
                   onClick={() => navigate("/home/Estatales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Estatales" />
                 </ListItemButton>
@@ -197,7 +228,7 @@ const Main = () => {
 
             <ListItemButton onClick={() => handleClick(1)}>
               <ListItemIcon>
-                <InboxIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Oficios Presupuesto" />
               {openMenus[1] ? <ExpandLess /> : <ExpandMore />}
@@ -210,7 +241,7 @@ const Main = () => {
                   onClick={() => navigate("/home/Federales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Generados" />
                 </ListItemButton>
@@ -220,7 +251,7 @@ const Main = () => {
                   onClick={() => navigate("/home/Estatales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Recibidos" />
                 </ListItemButton>
@@ -229,21 +260,21 @@ const Main = () => {
 
             <ListItemButton onClick={() => navigate("/home")}>
               <ListItemIcon>
-                <SearchIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Oficios ONU" />
             </ListItemButton>
 
             <ListItemButton onClick={() => navigate("/home")}>
               <ListItemIcon>
-                <SearchIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Proyectos de Inversión" />
             </ListItemButton>
 
             <ListItemButton onClick={() => handleClick(2)}>
               <ListItemIcon>
-                <InboxIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="Paquete Fiscal" />
               {openMenus[2] ? <ExpandLess /> : <ExpandMore />}
@@ -256,7 +287,7 @@ const Main = () => {
                   onClick={() => navigate("/home/Federales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Ley de Ingresos" />
                 </ListItemButton>
@@ -266,25 +297,32 @@ const Main = () => {
                   onClick={() => navigate("/home/Estatales")}
                 >
                   <ListItemIcon>
-                    <SearchIcon />
+                    <FiberManualRecordIcon />
                   </ListItemIcon>
                   <ListItemText primary="Ley de Egresos" />
                 </ListItemButton>
               </List>
             </Collapse>
 
-            <ListItemButton onClick={() => navigate("/home")}>
+            <ListItemButton onClick={() => navigate("/home/inap")}>
               <ListItemIcon>
-                <SearchIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="INAP" />
             </ListItemButton>
 
             <ListItemButton onClick={() => navigate("/home")}>
               <ListItemIcon>
-                <SearchIcon />
+                <FiberManualRecordIcon />
               </ListItemIcon>
               <ListItemText primary="SIREGOB" />
+            </ListItemButton>
+            <Divider></Divider>
+            <ListItemButton onClick={() => closeSssion()}>
+              <ListItemIcon>
+                <CancelIcon />
+              </ListItemIcon>
+              <ListItemText primary="Cerrar Sessión" />
             </ListItemButton>
           </List>
         </Drawer>
