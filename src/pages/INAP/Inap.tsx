@@ -16,7 +16,7 @@ import {
   Collapse,
   Typography,
 } from "@mui/material";
-import { inapgral } from "../../interfaces/IShare";
+import { inapgral, inapgral01 } from "../../interfaces/IShare";
 import { formatFecha } from "../../utils/FormatDate";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -24,11 +24,32 @@ const Inap = () => {
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
 
   const [data, setData] = useState([]);
+  const [dataCE, setDataCE] = useState([]);
 
-  const toggleRow = (rowId: any) => {
-    setOpenRows((prevOpenRows: any) => {
+  const toggleRow = (rowId: string) => {
+    setOpenRows((prevOpenRows: Record<string, boolean>) => {
       const isOpen = prevOpenRows[rowId] || false;
-      return { ...prevOpenRows, [rowId]: !isOpen };
+      // Cerrar todos los demás rowIds
+      const updatedOpenRows: Record<string, boolean> = {};
+      Object.keys(prevOpenRows).forEach((id) => {
+        updatedOpenRows[id] = id === rowId ? !isOpen : false;
+      });
+      return updatedOpenRows;
+    });
+  };
+
+  const ProcesaData01 = (tipo: number, idGral: string) => {
+    let data = {
+      TIPO: 5,
+      P_IdGral: idGral,
+    };
+
+    AuthService.inapGral01All(data).then((res) => {
+      if (res.NUMCODE == 200) {
+        setDataCE(res.RESPONSE);
+      } else {
+        MsgAlert("Error", res.STRMESSAGE, "error");
+      }
     });
   };
 
@@ -61,6 +82,52 @@ const Inap = () => {
     ProcesaData(4);
   }, []);
 
+  const renderConvenioEspecifico = (dataCE: any) => {
+    return (
+      <Box sx={{ margin: 1 }}>
+        <Typography variant="h6" gutterBottom component="div">
+          Convenio Específico
+        </Typography>
+        <Table size="small" aria-label="purchases">
+          <TableHead>
+            <TableRow>
+              <TableCell>Fecha Convenio Específico</TableCell>
+              <TableCell>Nombre Convenio Específico</TableCell>
+              <TableCell>PDF Convenio Específico</TableCell>
+              <TableCell>Objetivo del Convenio Específico</TableCell>
+              <TableCell>Monto Convenio Específico</TableCell>
+              <TableCell>Fecha Finiquito</TableCell>
+              <TableCell>PDF Finiquito</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {dataCE.map((item: inapgral01) => (
+              <TableRow key={item.Id}>
+                <TableCell component="th" scope="row">
+                  {formatFecha(item.FechaConvenioinicio) +
+                    "-" +
+                    formatFecha(item.FechaConveniofin)}
+                </TableCell>
+                <TableCell align="left">{item.NombreConvenio}</TableCell>
+                <TableCell align="left">
+                  <FilePresentIcon />
+                </TableCell>
+                <TableCell align="left">{item.Objetivo}</TableCell>
+                <TableCell align="left">{item.Monto}</TableCell>
+                <TableCell align="left">
+                  {formatFecha(item.FechaFiniquito)}
+                </TableCell>
+                <TableCell align="left">
+                  <FilePresentIcon />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
+    );
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -84,7 +151,10 @@ const Inap = () => {
                   <IconButton
                     aria-label="expand row"
                     size="small"
-                    onClick={() => toggleRow(row.Id)}
+                    onClick={() => {
+                      toggleRow(row.Id);
+                      ProcesaData01(5, row.Id);
+                    }}
                   >
                     {openRows[row.Id] ? (
                       <KeyboardArrowUpIcon />
@@ -110,39 +180,7 @@ const Inap = () => {
                   colSpan={6}
                 >
                   <Collapse in={openRows[row.Id]} timeout="auto" unmountOnExit>
-                    <Box sx={{ margin: 1 }}>
-                      <Typography variant="h6" gutterBottom component="div">
-                        History
-                      </Typography>
-                      <Table size="small" aria-label="purchases">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Customer</TableCell>
-                            <TableCell align="right">Amount</TableCell>
-                            <TableCell align="right">Total price ($)</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {/* {row.history.map((historyRow) => (
-                            <TableRow key={historyRow.date}>
-                              <TableCell component="th" scope="row">
-                                {historyRow.date}
-                              </TableCell>
-                              <TableCell>{historyRow.customerId}</TableCell>
-                              <TableCell align="right">
-                                {historyRow.amount}
-                              </TableCell>
-                              <TableCell align="right">
-                                {Math.round(
-                                  historyRow.amount * row.price * 100
-                                ) / 100}
-                              </TableCell>
-                            </TableRow>
-                          ))} */}
-                        </TableBody>
-                      </Table>
-                    </Box>
+                    {renderConvenioEspecifico(dataCE)}
                   </Collapse>
                 </TableCell>
               </TableRow>
