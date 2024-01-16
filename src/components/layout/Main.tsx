@@ -130,7 +130,7 @@ const Main = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              SISTEMA DE INVESTIGACIÓN E INTELIGENCIA
+              Plataforma de Digitalización de Documentos
             </Typography>
           </Toolbar>
         </AppBar>
@@ -339,7 +339,7 @@ const Main = () => {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, width: "120%" }}>
             <Outlet />
           </Container>
         </Box>
