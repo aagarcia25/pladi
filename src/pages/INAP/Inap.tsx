@@ -120,6 +120,7 @@ const Inap = () => {
               <TableRow key={Math.random()}>
                 <TableCell>Fecha Entrega Presupuesto</TableCell>
                 <TableCell>Fecha de Pago</TableCell>
+                <TableCell>Nombre SPEI</TableCell>
                 <TableCell>PDF SPEI</TableCell>
               </TableRow>
             </TableHead>
@@ -131,6 +132,9 @@ const Inap = () => {
                   </TableCell>
                   <TableCell component="th" scope="row" align="left">
                     {formatFecha(item.FechaPAgo)}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="left">
+                    {item.NombreFile}
                   </TableCell>
                   <TableCell component="th" scope="row" align="left">
                     <FilePresentIcon />
@@ -191,7 +195,7 @@ const Inap = () => {
                       <FilePresentIcon />
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
-                      {item.inap0102_FechaActa}
+                      {formatFecha(item.inap0102_FechaActa)}
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
                       <FilePresentIcon />
@@ -213,7 +217,7 @@ const Inap = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
-                      {item.inap0103_FechaFactura}
+                      {formatFecha(item.inap0103_FechaFactura)}
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
                       {item.inap0103_Factura}
