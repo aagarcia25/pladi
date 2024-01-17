@@ -3,6 +3,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Box,
+  Button,
+  ButtonGroup,
   Collapse,
   IconButton,
   Paper,
@@ -12,6 +14,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -24,6 +27,9 @@ import {
 } from "../../interfaces/IShare";
 import { AuthService } from "../../services/AuthService";
 import { formatFecha } from "../../utils/FormatDate";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 const Inap = () => {
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
   const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
@@ -113,11 +119,12 @@ const Inap = () => {
           <Table size="small" aria-label="purchases">
             <TableHead>
               <TableRow>
-                <TableCell align="center" colSpan={7}>
+                <TableCell align="center" colSpan={5}>
                   Detalle de Pago
                 </TableCell>
               </TableRow>
               <TableRow key={Math.random()}>
+                <TableCell></TableCell>
                 <TableCell>Fecha Entrega Presupuesto</TableCell>
                 <TableCell>Fecha de Pago</TableCell>
                 <TableCell>Nombre SPEI</TableCell>
@@ -127,6 +134,37 @@ const Inap = () => {
             <TableBody>
               {dataPD.map((item: pagos) => (
                 <TableRow key={item.Id}>
+                  <TableCell component="th" scope="row">
+                    <ButtonGroup variant="text">
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Agregar Registro"}>
+                          <AddCircleOutlineIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Editar Registro"}>
+                          <EditIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Eliminar Registro"}>
+                          <DeleteForeverIcon />
+                        </Tooltip>
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
                   <TableCell component="th" scope="row" align="left">
                     {formatFecha(item.FechaPresupuesto)}
                   </TableCell>
@@ -158,10 +196,10 @@ const Inap = () => {
           <Table size="small" aria-label="purchases">
             <TableHead>
               <TableRow>
-                <TableCell align="center" colSpan={3}>
+                <TableCell align="center" colSpan={4}>
                   Entregable
                 </TableCell>
-                <TableCell align="center" colSpan={2}>
+                <TableCell align="center" colSpan={3}>
                   Actas
                 </TableCell>
                 <TableCell align="center" colSpan={5}>
@@ -169,9 +207,11 @@ const Inap = () => {
                 </TableCell>
               </TableRow>
               <TableRow key={Math.random()}>
+                <TableCell></TableCell>
                 <TableCell>Clave</TableCell>
                 <TableCell>Entregable</TableCell>
                 <TableCell>PDF Entregable</TableCell>
+                <TableCell></TableCell>
                 <TableCell>Fecha acta de entrega</TableCell>
                 <TableCell>PDF Acta de entrega</TableCell>
                 <TableCell> </TableCell>
@@ -186,6 +226,37 @@ const Inap = () => {
                 <>
                   <TableRow key={item.inap0101_Id}>
                     <TableCell component="th" scope="row">
+                      <ButtonGroup variant="text">
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Agregar Registro"}>
+                            <AddCircleOutlineIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Editar Registro"}>
+                            <EditIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Eliminar Registro"}>
+                            <DeleteForeverIcon />
+                          </Tooltip>
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
+                    <TableCell component="th" scope="row">
                       {item.inap0101_Clave}
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
@@ -194,27 +265,89 @@ const Inap = () => {
                     <TableCell component="th" scope="row" align="left">
                       <FilePresentIcon />
                     </TableCell>
+                    <TableCell component="th" scope="row">
+                      <ButtonGroup variant="text">
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Agregar Registro"}>
+                            <AddCircleOutlineIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Editar Registro"}>
+                            <EditIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Eliminar Registro"}>
+                            <DeleteForeverIcon />
+                          </Tooltip>
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
                     <TableCell component="th" scope="row" align="left">
                       {formatFecha(item.inap0102_FechaActa)}
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
                       <FilePresentIcon />
                     </TableCell>
+
                     <TableCell component="th" scope="row">
-                      <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => {
-                          ProcesaData01(7, item.inap0103_Id);
-                          toggleRow02(item.inap0103_Id);
-                        }}
-                      >
-                        {openRows02[item.inap0103_Id] ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </IconButton>
+                      <ButtonGroup variant="text">
+                        <Button
+                          onClick={() => {
+                            ProcesaData01(7, item.inap0103_Id);
+                            toggleRow02(item.inap0103_Id);
+                          }}
+                        >
+                          <Tooltip title={"Agregar Registro"}>
+                            {openRows02[item.inap0103_Id] ? (
+                              <KeyboardArrowUpIcon />
+                            ) : (
+                              <KeyboardArrowDownIcon />
+                            )}
+                          </Tooltip>
+                        </Button>
+
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Agregar Registro"}>
+                            <AddCircleOutlineIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Editar Registro"}>
+                            <EditIcon />
+                          </Tooltip>
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            alert("Agregar");
+                          }}
+                        >
+                          <Tooltip title={"Eliminar Registro"}>
+                            <DeleteForeverIcon />
+                          </Tooltip>
+                        </Button>
+                      </ButtonGroup>
                     </TableCell>
                     <TableCell component="th" scope="row" align="left">
                       {formatFecha(item.inap0103_FechaFactura)}
@@ -276,20 +409,49 @@ const Inap = () => {
               <>
                 <TableRow key={item.Id}>
                   <TableCell component="th" scope="row">
-                    <IconButton
-                      aria-label="expand row"
-                      size="small"
-                      onClick={() => {
-                        ProcesaData01(6, item.Id);
-                        toggleRow01(item.Id);
-                      }}
-                    >
-                      {openRows01[item.Id] ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </IconButton>
+                    <ButtonGroup variant="text">
+                      <Button
+                        onClick={() => {
+                          ProcesaData01(6, item.Id);
+                          toggleRow01(item.Id);
+                        }}
+                      >
+                        <Tooltip title={"Ver Detalle"}>
+                          {openRows01[item.Id] ? (
+                            <KeyboardArrowUpIcon />
+                          ) : (
+                            <KeyboardArrowDownIcon />
+                          )}
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Agregar Registro"}>
+                          <AddCircleOutlineIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Editar Registro"}>
+                          <EditIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Eliminar Registro"}>
+                          <DeleteForeverIcon />
+                        </Tooltip>
+                      </Button>
+                    </ButtonGroup>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {formatFecha(item.FechaConvenioinicio) +
@@ -357,20 +519,50 @@ const Inap = () => {
                 sx={{ "& > *": { borderBottom: "unset" } }}
               >
                 <TableCell component="th" scope="row">
-                  <IconButton
-                    aria-label="expand row"
-                    size="small"
-                    onClick={() => {
-                      ProcesaData01(5, row.Id);
-                      toggleRow(row.Id);
-                    }}
-                  >
-                    {openRows[row.Id] ? (
-                      <KeyboardArrowUpIcon />
-                    ) : (
-                      <KeyboardArrowDownIcon />
-                    )}
-                  </IconButton>
+                  <ButtonGroup variant="text">
+                    <Button
+                      onClick={() => {
+                        ProcesaData01(5, row.Id);
+                        toggleRow(row.Id);
+                      }}
+                    >
+                      <Tooltip title={"Ver Detalle"}>
+                        {openRows[row.Id] ? (
+                          <KeyboardArrowUpIcon />
+                        ) : (
+                          <KeyboardArrowDownIcon />
+                        )}
+                      </Tooltip>
+                    </Button>
+
+                    <Button
+                      onClick={() => {
+                        alert("Agregar");
+                      }}
+                    >
+                      <Tooltip title={"Agregar Registro"}>
+                        <AddCircleOutlineIcon />
+                      </Tooltip>
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        alert("Agregar");
+                      }}
+                    >
+                      <Tooltip title={"Editar Registro"}>
+                        <EditIcon />
+                      </Tooltip>
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        alert("Agregar");
+                      }}
+                    >
+                      <Tooltip title={"Eliminar Registro"}>
+                        <DeleteForeverIcon />
+                      </Tooltip>
+                    </Button>
+                  </ButtonGroup>
                 </TableCell>
                 <TableCell component="th" scope="row" align="left">
                   {row.Clave}
