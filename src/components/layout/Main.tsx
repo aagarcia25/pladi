@@ -128,7 +128,7 @@ const Main = () => {
               variant="h6"
               color="#000000"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, textAlign: "center" }}
             >
               Plataforma de Digitalización de Documentos
             </Typography>

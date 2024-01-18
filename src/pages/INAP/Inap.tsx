@@ -6,6 +6,7 @@ import {
   Button,
   ButtonGroup,
   Collapse,
+  Grid,
   IconButton,
   Paper,
   Table,
@@ -14,6 +15,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  ToggleButton,
+  ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -30,6 +33,8 @@ import { formatFecha } from "../../utils/FormatDate";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import Swal from "sweetalert2";
 const Inap = () => {
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
   const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
@@ -85,10 +90,10 @@ const Inap = () => {
     });
   };
 
-  const ProcesaData = (tipo: number) => {
+  const ProcesaData = (tipo: number, id?: string) => {
     let data = {
       TIPO: tipo,
-      P_Id: "",
+      P_Id: id,
       P_CreadoPor: "",
       P_FechaConveniogrlinicio: "",
       P_FechaConveniogrlfin: "",
@@ -107,10 +112,6 @@ const Inap = () => {
       }
     });
   };
-
-  useEffect(() => {
-    ProcesaData(4);
-  }, []);
 
   const renderPagos = (dataPD: any) => {
     return (
@@ -137,6 +138,7 @@ const Inap = () => {
                   <TableCell component="th" scope="row">
                     <ButtonGroup variant="text">
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -146,6 +148,7 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -155,6 +158,7 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -228,6 +232,7 @@ const Inap = () => {
                     <TableCell component="th" scope="row">
                       <ButtonGroup variant="text">
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -237,6 +242,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -246,6 +252,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -268,6 +275,7 @@ const Inap = () => {
                     <TableCell component="th" scope="row">
                       <ButtonGroup variant="text">
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -277,6 +285,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -286,6 +295,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -306,6 +316,7 @@ const Inap = () => {
                     <TableCell component="th" scope="row">
                       <ButtonGroup variant="text">
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             ProcesaData01(7, item.inap0103_Id);
                             toggleRow02(item.inap0103_Id);
@@ -321,6 +332,7 @@ const Inap = () => {
                         </Button>
 
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -330,6 +342,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -339,6 +352,7 @@ const Inap = () => {
                           </Tooltip>
                         </Button>
                         <Button
+                          style={{ color: "black" }}
                           onClick={() => {
                             alert("Agregar");
                           }}
@@ -411,6 +425,7 @@ const Inap = () => {
                   <TableCell component="th" scope="row">
                     <ButtonGroup variant="text">
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           ProcesaData01(6, item.Id);
                           toggleRow01(item.Id);
@@ -425,6 +440,7 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -434,6 +450,7 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -443,6 +460,7 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
                       <Button
+                        style={{ color: "black" }}
                         onClick={() => {
                           alert("Agregar");
                         }}
@@ -499,101 +517,167 @@ const Inap = () => {
     );
   };
 
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow key={Math.random()}>
-            <TableCell></TableCell>
-            <TableCell>Clave</TableCell>
-            <TableCell>Fecha Convenio</TableCell>
-            <TableCell>Convenio</TableCell>
-            <TableCell>Documentos</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: inapgral) => (
-            <>
-              <TableRow
-                key={row.Id}
-                sx={{ "& > *": { borderBottom: "unset" } }}
-              >
-                <TableCell component="th" scope="row">
-                  <ButtonGroup variant="text">
-                    <Button
-                      onClick={() => {
-                        ProcesaData01(5, row.Id);
-                        toggleRow(row.Id);
-                      }}
-                    >
-                      <Tooltip title={"Ver Detalle"}>
-                        {openRows[row.Id] ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </Tooltip>
-                    </Button>
+  const handleBorrar = (tipo: number, v: any) => {
+    Swal.fire({
+      icon: "question",
+      title: "¿Estás seguro de eliminar este registro?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Confirmar",
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(v);
+        /*  let data = {
+          NUMOPERACION: 3,
+          CHID: v.row.id,
+          CHUSER: String(user.Id),
+        };
+        AuthService.inapGralAll(data).then((res) => {
+          if (res.SUCCESS) {
+            Toast.fire({
+              icon: "success",
+              title: "¡Registro Eliminado!",
+            });
+            let data = {
+              NUMOPERACION: 4,
+            };
+            consulta(data);
+          } else {
+            Swal.fire("¡Error!", res.STRMESSAGE, "error");
+          }
+        });*/
+      } else if (result.isDenied) {
+        Swal.fire("No se realizaron cambios", "", "info");
+      }
+    });
+  };
 
-                    <Button
-                      onClick={() => {
-                        alert("Agregar");
-                      }}
-                    >
-                      <Tooltip title={"Agregar Registro"}>
-                        <AddCircleOutlineIcon />
-                      </Tooltip>
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        alert("Agregar");
-                      }}
-                    >
-                      <Tooltip title={"Editar Registro"}>
-                        <EditIcon />
-                      </Tooltip>
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        alert("Agregar");
-                      }}
-                    >
-                      <Tooltip title={"Eliminar Registro"}>
-                        <DeleteForeverIcon />
-                      </Tooltip>
-                    </Button>
-                  </ButtonGroup>
-                </TableCell>
-                <TableCell component="th" scope="row" align="left">
-                  {row.Clave}
-                </TableCell>
-                <TableCell component="th" scope="row" align="left">
-                  {formatFecha(row.FechaConveniogrlinicio) +
-                    "-" +
-                    formatFecha(row.FechaConveniogrlfin)}
-                </TableCell>
-                <TableCell component="th" scope="row" align="left">
-                  {row.NombreConvenio}
-                </TableCell>
-                <TableCell component="th" scope="row" align="left">
-                  <FilePresentIcon />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  style={{ paddingBottom: 0, paddingTop: 0 }}
-                  colSpan={6}
+  useEffect(() => {
+    ProcesaData(4);
+  }, []);
+
+  return (
+    <div>
+      <Grid container justifyContent="flex-start" alignItems="flex-start">
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <ToggleButtonGroup value="check" aria-label="text alignment">
+            <Tooltip title={"Exportar a Excel"}>
+              <ToggleButton
+                style={{ color: "black" }}
+                value="left"
+                aria-label="left aligned"
+              >
+                <FileDownloadIcon />
+              </ToggleButton>
+            </Tooltip>
+          </ToggleButtonGroup>
+        </Grid>
+      </Grid>
+
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow key={Math.random()}>
+              <TableCell></TableCell>
+              <TableCell>Clave</TableCell>
+              <TableCell>Fecha Convenio</TableCell>
+              <TableCell>Convenio</TableCell>
+              <TableCell>Documentos</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((row: inapgral) => (
+              <>
+                <TableRow
+                  key={row.Id}
+                  sx={{ "& > *": { borderBottom: "unset" } }}
                 >
-                  <Collapse in={openRows[row.Id]} timeout="auto" unmountOnExit>
-                    {renderConvenioEspecifico(dataCE)}
-                  </Collapse>
-                </TableCell>
-              </TableRow>
-            </>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                  <TableCell component="th" scope="row">
+                    <ButtonGroup variant="text">
+                      <Button
+                        style={{ color: "black" }}
+                        onClick={() => {
+                          ProcesaData01(5, row.Id);
+                          toggleRow(row.Id);
+                        }}
+                      >
+                        <Tooltip title={"Ver Detalle"}>
+                          {openRows[row.Id] ? (
+                            <KeyboardArrowUpIcon />
+                          ) : (
+                            <KeyboardArrowDownIcon />
+                          )}
+                        </Tooltip>
+                      </Button>
+
+                      <Button
+                        style={{ color: "black" }}
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Agregar Registro"}>
+                          <AddCircleOutlineIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        style={{ color: "black" }}
+                        onClick={() => {
+                          alert("Agregar");
+                        }}
+                      >
+                        <Tooltip title={"Editar Registro"}>
+                          <EditIcon />
+                        </Tooltip>
+                      </Button>
+                      <Button
+                        style={{ color: "black" }}
+                        onClick={() => {
+                          handleBorrar(1, row);
+                        }}
+                      >
+                        <Tooltip title={"Eliminar Registro"}>
+                          <DeleteForeverIcon />
+                        </Tooltip>
+                      </Button>
+                    </ButtonGroup>
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="left">
+                    {row.Clave}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="left">
+                    {formatFecha(row.FechaConveniogrlinicio) +
+                      "-" +
+                      formatFecha(row.FechaConveniogrlfin)}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="left">
+                    {row.NombreConvenio}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="left">
+                    <FilePresentIcon />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{ paddingBottom: 0, paddingTop: 0 }}
+                    colSpan={6}
+                  >
+                    <Collapse
+                      in={openRows[row.Id]}
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      {renderConvenioEspecifico(dataCE)}
+                    </Collapse>
+                  </TableCell>
+                </TableRow>
+              </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
