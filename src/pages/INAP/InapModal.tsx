@@ -59,7 +59,7 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={() => handleClose()}>
             Save changes
           </Button>
         </DialogActions>

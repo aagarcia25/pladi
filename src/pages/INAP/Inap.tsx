@@ -35,7 +35,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Swal from "sweetalert2";
+import InapModal from "./InapModal";
 const Inap = () => {
+  const [openModal, setopenModal] = useState(false);
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
   const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
   const [openRows02, setOpenRows02] = useState<{ [key: string]: boolean }>({});
@@ -98,8 +100,6 @@ const Inap = () => {
       P_FechaConveniogrlinicio: "",
       P_FechaConveniogrlfin: "",
       P_RouteConvenio: "",
-      P_NombreFile: "",
-      P_NombreConvenio: "",
     };
 
     AuthService.inapGralAll(data).then((res) => {
@@ -553,6 +553,14 @@ const Inap = () => {
     });
   };
 
+  const openmodal = () => {
+    setopenModal(true);
+  };
+
+  const handleClose = () => {
+    setopenModal(false);
+  };
+
   useEffect(() => {
     ProcesaData(4);
   }, []);
@@ -614,7 +622,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          alert("Agregar");
+                          openmodal();
                         }}
                       >
                         <Tooltip title={"Agregar Registro"}>
@@ -677,6 +685,7 @@ const Inap = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {openModal ? <InapModal handleClose={handleClose}></InapModal> : ""}
     </div>
   );
 };
