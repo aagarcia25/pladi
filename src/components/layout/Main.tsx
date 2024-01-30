@@ -17,6 +17,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Tooltip,
   Typography,
   styled,
 } from "@mui/material";
@@ -25,6 +26,8 @@ import MuiDrawer from "@mui/material/Drawer";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getItem } from "../../services/localStorage";
+import logo from "../../assets/logo_genl.svg";
+import ArticleIcon from "@mui/icons-material/Article";
 const drawerWidth: number = 280;
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -76,7 +79,7 @@ const Drawer = styled(MuiDrawer, {
 
 const Main = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState([false, false, false]);
   const data = JSON.parse(String(getItem("User"))) as any;
 
@@ -135,28 +138,20 @@ const Main = () => {
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            {/* <img
-              src={logos}
-              alt="Descripción de la imagen"
-              width="100"
-              height="70"
-              onClick={() => navigate("/sinein/inicio")} // Agrega un evento onClick
-              style={{
-                cursor: "pointer",
-                marginRight: "20px",
-              }}
-            /> */}
+          <Toolbar>
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon sx={{ ml: "auto" }} />
+              <ChevronLeftIcon />
             </IconButton>
+            <div style={{ flex: 1 }} />
+            {"   "}
+            <img
+              src={logo}
+              alt="Descripción"
+              style={{
+                width: "50%",
+                height: "50%",
+              }}
+            />
           </Toolbar>
           <Divider />
 
@@ -170,14 +165,12 @@ const Main = () => {
               {data!.Nombre}
             </Grid>
             <Grid item xs={1}>
-              {" "}
               {data!.Puesto}
             </Grid>
             <Grid item xs={1}>
               {data!.CorreoElectronico}
             </Grid>
             <Grid item xs={1}>
-              {" "}
               {data!.Telefono}
             </Grid>
           </Grid>
@@ -194,14 +187,19 @@ const Main = () => {
             <Divider sx={{ my: 1 }} />
           </List> */}
           <List component="nav">
-            <ListItemButton onClick={() => handleClick(0)}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Auditorías" />
-              {openMenus[0] ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => handleClick(0)}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Auditorías" />
+                {openMenus[0] ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </Tooltip>
             <Collapse in={openMenus[0]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
@@ -226,14 +224,19 @@ const Main = () => {
               </List>
             </Collapse>
 
-            <ListItemButton onClick={() => handleClick(1)}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Oficios Presupuesto" />
-              {openMenus[1] ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => handleClick(1)}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Oficios Presupuesto" />
+                {openMenus[1] ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </Tooltip>
             <Collapse in={openMenus[1]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
@@ -257,29 +260,43 @@ const Main = () => {
                 </ListItemButton>
               </List>
             </Collapse>
-
-            <ListItemButton onClick={() => navigate("/home")}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Oficios ONU" />
-            </ListItemButton>
-
-            <ListItemButton onClick={() => navigate("/home")}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Proyectos de Inversión" />
-            </ListItemButton>
-
-            <ListItemButton onClick={() => handleClick(2)}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Paquete Fiscal" />
-              {openMenus[2] ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => navigate("/home")}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Oficios ONU" />
+              </ListItemButton>
+            </Tooltip>
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => navigate("/home")}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Proyectos de Inversión" />
+              </ListItemButton>
+            </Tooltip>
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => handleClick(2)}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Paquete Fiscal" />
+                {openMenus[2] ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+            </Tooltip>
             <Collapse in={openMenus[2]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
@@ -304,19 +321,30 @@ const Main = () => {
               </List>
             </Collapse>
 
-            <ListItemButton onClick={() => navigate("/home/inap")}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="INAP" />
-            </ListItemButton>
-
-            <ListItemButton onClick={() => navigate("/home")}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="SIREGOB" />
-            </ListItemButton>
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes al INAP"
+              }
+            >
+              <ListItemButton onClick={() => navigate("/home/inap")}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="INAP" />
+              </ListItemButton>
+            </Tooltip>
+            <Tooltip
+              title={
+                "Control y Administración de los Oficios Correspondientes a Auditorias"
+              }
+            >
+              <ListItemButton onClick={() => navigate("/home")}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="SIREGOB" />
+              </ListItemButton>
+            </Tooltip>
             <Divider></Divider>
             <ListItemButton onClick={() => closeSssion()}>
               <ListItemIcon>

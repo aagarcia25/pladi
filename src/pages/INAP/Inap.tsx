@@ -6,8 +6,13 @@ import {
   Button,
   ButtonGroup,
   Collapse,
+  FormControl,
   Grid,
   IconButton,
+  Input,
+  InputAdornment,
+  InputBase,
+  InputLabel,
   Paper,
   Table,
   TableBody,
@@ -15,12 +20,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import MsgAlert from "../../components/share/MsgAlert";
 import {
   entregables,
@@ -35,12 +41,14 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Swal from "sweetalert2";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import InapModal from "./InapModal";
 const Inap = () => {
   const [openModal, setopenModal] = useState(false);
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
   const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
   const [openRows02, setOpenRows02] = useState<{ [key: string]: boolean }>({});
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [data, setData] = useState([]);
   const [dataCE, setDataCE] = useState([]);
@@ -561,6 +569,18 @@ const Inap = () => {
     setopenModal(false);
   };
 
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+    // Agrega tu lógica aquí, por ejemplo, puedes realizar una búsqueda después de un cierto período de tiempo
+
+    //clearTimeout(searchTimeout);
+    const searchTimeout = setTimeout(() => {
+      // Lógica para realizar la búsqueda
+      console.log("Búsqueda realizada:", value);
+    }, 2000); // Ajusta el tiempo de espera según tus necesidades
+  };
+
   useEffect(() => {
     ProcesaData(4);
   }, []);
@@ -579,6 +599,18 @@ const Inap = () => {
                 <FileDownloadIcon />
               </ToggleButton>
             </Tooltip>
+
+            <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
+              <ManageSearchIcon
+                sx={{ color: "action.active", mr: 1, my: 0.5 }}
+              />
+              <TextField
+                id="input-with-sx"
+                label="Buscar"
+                variant="standard"
+                onChange={handleSearchChange}
+              />
+            </Box>
           </ToggleButtonGroup>
         </Grid>
       </Grid>
