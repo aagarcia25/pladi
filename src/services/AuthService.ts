@@ -12,4 +12,10 @@ export class AuthService {
   public static async inapGral01All(data: any) {
     return await post("inapGral01All", data);
   }
+  public static async getFile(data: any) {
+    return await post("getFile", data);
+  }
+  public static async adminfiles(data: any) {
+    return await post("adminfiles", data);
+  }
 }

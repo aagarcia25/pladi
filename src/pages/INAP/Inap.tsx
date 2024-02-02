@@ -1,18 +1,17 @@
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import {
   Box,
   Button,
   ButtonGroup,
   Collapse,
-  FormControl,
   Grid,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputBase,
-  InputLabel,
   Paper,
   Table,
   TableBody,
@@ -27,7 +26,9 @@ import {
   Typography,
 } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import MsgAlert from "../../components/share/MsgAlert";
+import VisorDocumentos from "../../components/share/VisorDocumentos";
 import {
   entregables,
   inapgral,
@@ -36,20 +37,15 @@ import {
 } from "../../interfaces/IShare";
 import { AuthService } from "../../services/AuthService";
 import { formatFecha } from "../../utils/FormatDate";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import Swal from "sweetalert2";
-import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import InapModal from "./InapModal";
 const Inap = () => {
   const [openModal, setopenModal] = useState(false);
+  const [openModalFiles, setopenModalFiles] = useState(false);
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
   const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
   const [openRows02, setOpenRows02] = useState<{ [key: string]: boolean }>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const [row, setRow] = useState({});
   const [data, setData] = useState([]);
   const [dataCE, setDataCE] = useState([]);
   const [dataEN, setDataEN] = useState([]);
@@ -565,7 +561,12 @@ const Inap = () => {
     setopenModal(true);
   };
 
+  const openmodalFiles = (data: any) => {
+    setRow(data);
+    setopenModalFiles(true);
+  };
   const handleClose = () => {
+    setopenModalFiles(false);
     setopenModal(false);
   };
 
@@ -694,7 +695,12 @@ const Inap = () => {
                   <TableCell component="th" scope="row" align="left">
                     {row.NombreConvenio}
                   </TableCell>
-                  <TableCell component="th" scope="row" align="left">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    align="left"
+                    onClick={() => openmodalFiles(row)}
+                  >
                     <FilePresentIcon />
                   </TableCell>
                 </TableRow>
@@ -718,6 +724,14 @@ const Inap = () => {
         </Table>
       </TableContainer>
       {openModal ? <InapModal handleClose={handleClose}></InapModal> : ""}
+      {openModalFiles ? (
+        <VisorDocumentos
+          handleFunction={handleClose}
+          obj={row}
+        ></VisorDocumentos>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

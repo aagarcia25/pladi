@@ -8,6 +8,10 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+import { Grid, TextField } from "@mui/material";
+import { useState } from "react";
+import { Dayjs } from "dayjs";
+import CustomizedDate from "../../components/share/CustomizedDate";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -19,15 +23,32 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function InapModal({ handleClose }: { handleClose: Function }) {
+  const [fstart, setfstart] = useState<Dayjs | null>();
+  const [fend, setfend] = useState<Dayjs | null>();
+
+  const handledatestar = (v: any) => {
+    setfstart(v);
+  };
+
+  const handledateend = (v: any) => {
+    setfend(v);
+  };
+
   return (
     <React.Fragment>
       <BootstrapDialog
+        fullScreen
         onClose={() => handleClose()}
         aria-labelledby="customized-dialog-title"
         open={true}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+        <DialogTitle
+          sx={{ m: 0, p: 2, textAlign: "center" }}
+          id="customized-dialog-title"
+        >
+          <Typography variant="h4" gutterBottom>
+            Registro de Información
+          </Typography>
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -42,21 +63,40 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={2}>
+              <CustomizedDate
+                value={fstart}
+                label={"Fecha Inicio"}
+                onchange={handledatestar}
+                disabled={false}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CustomizedDate
+                value={fend}
+                label={"Fecha Fin"}
+                onchange={handledateend}
+                disabled={false}
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                fullWidth
+                id="filled-multiline-static"
+                label="Convenio"
+                multiline
+                rows={4}
+                defaultValue="Describa el Convenio"
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={2}></Grid>
+
+            <Grid item xs={8}></Grid>
+            <Grid item xs={2}></Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={() => handleClose()}>

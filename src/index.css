@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.swal2-container {
+  z-index: 2000 !important
+}
+
+.css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop {
+  background-color: transparent !important;
+}
+
+.MuiBackdrop-root .MuiModal-backdrop .css-919eu4 {
+  background-color: transparent !important;
+}
+
+.css-919eu4 {
+  background-color: transparent !important;
+}
