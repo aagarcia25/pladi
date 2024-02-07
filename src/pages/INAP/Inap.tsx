@@ -412,7 +412,22 @@ const Inap = () => {
         <Table size="small" aria-label="purchases">
           <TableHead>
             <TableRow key={Math.random()}>
-              <TableCell></TableCell>
+              <TableCell>
+                <ToggleButtonGroup value="check" aria-label="text alignment">
+                  <Tooltip title={"Agregar Registro"}>
+                    <ToggleButton
+                      style={{ color: "black" }}
+                      value="left"
+                      aria-label="left aligned"
+                      onClick={() => {
+                        openmodal();
+                      }}
+                    >
+                      <AddCircleOutlineIcon />
+                    </ToggleButton>
+                  </Tooltip>
+                </ToggleButtonGroup>
+              </TableCell>
               <TableCell>Fecha Convenio Específico</TableCell>
               <TableCell>Nombre Convenio Específico</TableCell>
               <TableCell>PDF Convenio Específico</TableCell>
@@ -566,6 +581,7 @@ const Inap = () => {
     setopenModalFiles(true);
   };
   const handleClose = () => {
+    ProcesaData(4);
     setopenModalFiles(false);
     setopenModal(false);
   };
@@ -591,6 +607,19 @@ const Inap = () => {
       <Grid container justifyContent="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <ToggleButtonGroup value="check" aria-label="text alignment">
+            <Tooltip title={"Agregar Registro"}>
+              <ToggleButton
+                style={{ color: "black" }}
+                value="left"
+                aria-label="left aligned"
+                onClick={() => {
+                  openmodal();
+                }}
+              >
+                <AddCircleOutlineIcon />
+              </ToggleButton>
+            </Tooltip>
+
             <Tooltip title={"Exportar a Excel"}>
               <ToggleButton
                 style={{ color: "black" }}
@@ -652,16 +681,6 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
 
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          openmodal();
-                        }}
-                      >
-                        <Tooltip title={"Agregar Registro"}>
-                          <AddCircleOutlineIcon />
-                        </Tooltip>
-                      </Button>
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {

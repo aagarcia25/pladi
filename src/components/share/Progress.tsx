@@ -1,5 +1,4 @@
 import { CircularProgress, Dialog, Grid, Typography } from "@mui/material";
-import * as React from "react";
 
 const Progress = ({ open, mensaje }: { open: boolean; mensaje?: string }) => {
   return (

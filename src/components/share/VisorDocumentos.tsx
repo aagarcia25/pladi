@@ -1,6 +1,7 @@
 import DownloadingIcon from "@mui/icons-material/Downloading";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   Box,
   DialogContent,
@@ -30,7 +31,7 @@ const VisorDocumentos = ({
   handleFunction: Function;
   obj: any;
 }) => {
-  const [openSlider, setOpenSlider] = useState(false);
+  const [openSlider, setOpenSlider] = useState(true);
   const [open, setOpen] = useState(false);
   const [verarchivo, setverarchivo] = useState(false);
   const [vrows, setVrows] = useState({});
@@ -39,6 +40,7 @@ const VisorDocumentos = ({
   const user = JSON.parse(String(getItem("User"))) as any;
 
   const consulta = () => {
+    setOpenSlider(true);
     let data = {
       TIPO: 3,
       P_IDOWNER: obj.id,
@@ -125,7 +127,8 @@ const VisorDocumentos = ({
     setOpenSlider(true);
     let data = {
       NUMOPERACION: 5,
-      P_ROUTE: v.row.Route,
+      P_ROUTE: v.row.Ruta,
+      P_NOMBRE: v.row.NombreFile,
     };
 
     AuthService.getFile(data).then((res) => {
@@ -136,7 +139,7 @@ const VisorDocumentos = ({
         var link = document.createElement("a");
         document.body.appendChild(link);
         link.href = data;
-        link.download = v.row.Nombre;
+        link.download = v.row.NombreFile;
         link.click();
         window.URL.revokeObjectURL(data);
         link.remove();
@@ -153,15 +156,17 @@ const VisorDocumentos = ({
   };
 
   const handleVer = (v: any) => {
+    console.log(v);
     setOpenSlider(true);
     let data = {
       NUMOPERACION: 5,
-      P_ROUTE: v.row.Route,
+      P_ROUTE: v.row.Ruta,
+      P_NOMBRE: v.row.NombreFile,
     };
 
     AuthService.getFile(data).then((res) => {
       if (res.SUCCESS) {
-        var bufferArray = base64ToArrayBuffer(String(res.RESPONSE));
+        var bufferArray = base64ToArrayBuffer(String(res.RESPONSE.FILE));
         var blobStore = new Blob([bufferArray], { type: res.RESPONSE.TIPO });
         var data = window.URL.createObjectURL(blobStore);
         var link = document.createElement("a");
@@ -235,6 +240,14 @@ const VisorDocumentos = ({
         return (
           <>
             <ButtonsDetail
+              title={"Eliminar"}
+              handleFunction={handleAccion}
+              show={true}
+              icon={<DeleteForeverIcon />}
+              row={v}
+            ></ButtonsDetail>
+
+            <ButtonsDetail
               title={"Ver"}
               handleFunction={handleVer}
               show={true}
@@ -255,11 +268,6 @@ const VisorDocumentos = ({
     },
   ];
 
-  const handleOpen = (v: any) => {
-    setOpen(true);
-    setVrows("");
-  };
-
   useEffect(() => {
     console.log(obj);
     consulta();
@@ -270,9 +278,9 @@ const VisorDocumentos = ({
       <ModalForm title={"Visor de Documentos"} handleClose={handleFunction}>
         <Progress open={openSlider}></Progress>
 
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {/* <Typography variant="h4">{obj}</Typography> */}
-        </Box>
+        {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography variant="h4">{obj.row.NombreFile}</Typography>
+        </Box> */}
 
         <>
           <TooltipPersonalizado
@@ -314,11 +322,11 @@ const VisorDocumentos = ({
             <MUIXDataGrid columns={columns} rows={data} />
           </Grid>
           <Grid item xs={6}>
-            {URLruta !== "" ? (
+            {/* {URLruta !== "" ? (
               <iframe width="100%" height="100%" src={URLruta} />
             ) : (
               ""
-            )}
+            )} */}
           </Grid>
         </Grid>
       </ModalForm>

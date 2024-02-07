@@ -8,10 +8,13 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { Grid, TextField } from "@mui/material";
+import { Grid, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { Dayjs } from "dayjs";
 import CustomizedDate from "../../components/share/CustomizedDate";
+import { AuthService } from "../../services/AuthService";
+import MsgAlert from "../../components/share/MsgAlert";
+import { getItem } from "../../services/localStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -25,13 +28,36 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function InapModal({ handleClose }: { handleClose: Function }) {
   const [fstart, setfstart] = useState<Dayjs | null>();
   const [fend, setfend] = useState<Dayjs | null>();
-
+  const [convenio, setconvenio] = useState<string>();
+  const user = JSON.parse(String(getItem("User"))) as any;
   const handledatestar = (v: any) => {
     setfstart(v);
   };
 
   const handledateend = (v: any) => {
     setfend(v);
+  };
+
+  const inserta = () => {
+    let data = {
+      TIPO: 1,
+      P_CreadoPor: user.Id,
+      P_FechaConveniogrlinicio: fstart,
+      P_FechaConveniogrlfin: fend,
+      P_NombreConvenio: convenio,
+    };
+
+    AuthService.inapGralAll(data).then((res) => {
+      if (res.NUMCODE == 200) {
+        MsgAlert(
+          "Información",
+          "Registro Agregado con correctamente",
+          "success"
+        );
+      } else {
+        MsgAlert("Error", res.STRMESSAGE, "error");
+      }
+    });
   };
 
   return (
@@ -64,7 +90,7 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
         </IconButton>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={2} md={2} lg={2}>
               <CustomizedDate
                 value={fstart}
                 label={"Fecha Inicio"}
@@ -72,7 +98,7 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
                 disabled={false}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={2} md={2} lg={2}>
               <CustomizedDate
                 value={fend}
                 label={"Fecha Fin"}
@@ -80,29 +106,46 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
                 disabled={false}
               />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12} sm={8} md={8} lg={8}>
               <TextField
                 fullWidth
                 id="filled-multiline-static"
                 label="Convenio"
                 multiline
                 rows={4}
-                defaultValue="Describa el Convenio"
+                defaultValue=""
+                value={convenio}
+                onChange={(v) => {
+                  setconvenio(v.target.value);
+                }}
               />
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={2}></Grid>
 
-            <Grid item xs={8}></Grid>
-            <Grid item xs={2}></Grid>
+          <Grid
+            container
+            justifyContent="center" // Centra horizontalmente en el contenedor
+            alignItems="center" // Centra verticalmente en el contenedor
+            marginTop={10}
+          >
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => inserta()}
+              >
+                Guardar
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => handleClose()}
+              >
+                Salir
+              </Button>
+            </Stack>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={() => handleClose()}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
   );

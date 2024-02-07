@@ -2,6 +2,7 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 
 const CustomizedDate = ({
   value,
@@ -14,6 +15,11 @@ const CustomizedDate = ({
   onchange: Function;
   disabled: boolean;
 }) => {
+  const handleDateChange = (selectedDate: any) => {
+    const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD HH:mm:ss");
+    onchange(formattedDate);
+  };
+
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -21,7 +27,7 @@ const CustomizedDate = ({
         <DatePicker
           value={value}
           format="DD/MM/YYYY"
-          onChange={(v) => onchange(v)}
+          onChange={handleDateChange}
           disabled={disabled}
         />
       </LocalizationProvider>
