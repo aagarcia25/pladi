@@ -192,6 +192,7 @@ const Inap = () => {
           process.env.REACT_APP_APPLICATION_BASE_URL + "/migradata",
           formData
         );
+        console.log("respuesta de archivo");
         console.log(response);
         if (response.data.success) {
           setopen(false);
