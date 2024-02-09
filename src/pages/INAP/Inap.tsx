@@ -886,7 +886,7 @@ const Inap = () => {
     setopenModalFacturas(false);
     setopenModalSpei(false);
 
-    refrecatabla();
+    // refrecatabla();
   };
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
