@@ -24,10 +24,20 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function InapModal({ handleClose }: { handleClose: Function }) {
+export default function InapModalConvenio({
+  handleClose,
+  obj,
+}: {
+  handleClose: Function;
+  obj: any;
+}) {
   const [fstart, setfstart] = useState<Dayjs | null>();
   const [fend, setfend] = useState<Dayjs | null>();
+  const [ffin, setffin] = useState<Dayjs | null>();
   const [convenio, setconvenio] = useState<string>();
+  const [objetivo, setobjetivo] = useState<string>();
+  const [monto, setmonto] = useState<string>();
+
   const user = JSON.parse(String(getItem("User"))) as any;
   const handledatestar = (v: any) => {
     setfstart(v);
@@ -37,25 +47,37 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
     setfend(v);
   };
 
+  const handledateffin = (v: any) => {
+    setffin(v);
+  };
+
   const inserta = () => {
     let data = {
       TIPO: 1,
+      P_IdGral: obj.Id,
       P_CreadoPor: user.Id,
-      P_FechaConveniogrlinicio: fstart,
-      P_FechaConveniogrlfin: fend,
+      P_FechaConvenioinicio: fstart,
+      P_FechaConveniofin: fend,
       P_NombreConvenio: convenio,
+      P_Objetivo: objetivo,
+      P_Monto: monto,
+      P_FechaFiniquito: ffin,
     };
 
-    AuthService.inapGralAll(data).then((res) => {
+    AuthService.inapGral01All(data).then((res) => {
       if (res.NUMCODE == 200) {
         MsgAlert(
           "Información",
           "Registro Agregado con correctamente",
           "success"
         );
+
         setfstart(null);
         setfend(null);
+        setffin(null);
         setconvenio("");
+        setobjetivo("");
+        setmonto("");
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
       }
@@ -109,12 +131,11 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
               />
             </Grid>
             <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Typography>Nombre Específico del Convenio:</Typography>
               <TextField
                 fullWidth
                 id="filled-multiline-static"
-                label="Convenio"
-                multiline
-                rows={4}
+                rows={1}
                 defaultValue=""
                 value={convenio}
                 onChange={(v) => {
@@ -124,10 +145,50 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
             </Grid>
           </Grid>
 
+          <Grid container spacing={2} marginTop={5}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Typography>Objetivo del Convenio Específico:</Typography>
+              <TextField
+                fullWidth
+                id="filled-multiline-static"
+                multiline
+                rows={4}
+                defaultValue=""
+                value={objetivo}
+                onChange={(v) => {
+                  setobjetivo(v.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2} marginTop={5}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Typography>Monto Convenio Específico</Typography>
+              <TextField
+                fullWidth
+                id="filled-multiline-static"
+                rows={1}
+                value={monto}
+                onChange={(v) => {
+                  setmonto(v.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={2} md={2} lg={2}>
+              <CustomizedDate
+                value={ffin}
+                label={"Fecha Finiquito"}
+                onchange={handledateffin}
+                disabled={false}
+              />
+            </Grid>
+          </Grid>
+
           <Grid
             container
-            justifyContent="center" // Centra horizontalmente en el contenedor
-            alignItems="center" // Centra verticalmente en el contenedor
+            justifyContent="center"
+            alignItems="center"
             marginTop={10}
           >
             <Stack direction="row" spacing={2}>

@@ -35,6 +35,7 @@ export type inapgral01 = {
 };
 
 export type entregables = {
+  Id: string;
   inap0101_Id: string;
   inap0101_IdGral01: string;
   inap0101_Clave: number;
@@ -70,6 +71,31 @@ export type entregables = {
   inap0103_RouteFactura: string;
   inap0103_NombreFile: string;
   inap0103_Monto: number;
+};
+
+export type facturas = {
+  Id: string;
+  inap0103_IdGral01: string;
+  inap0103_Deleted: number;
+  inap0103_UltimaActualizacion: string;
+  inap0103_FechaCreacion: string;
+  inap0103_ModificadoPor: string;
+  inap0103_CreadoPor: string;
+  inap0103_FechaFactura: string;
+  inap0103_Factura: string;
+  inap0103_Monto: number;
+};
+
+export type actas = {
+  Id: string;
+  inap0102_IdGral01: string;
+  inap0102_Deleted: number;
+  inap0102_UltimaActualizacion: string;
+  inap0102_FechaCreacion: string;
+  inap0102_ModificadoPor: string;
+  inap0102_CreadoPor: string;
+  inap0102_FechaActa: string;
+  inap0102_NombreActa: string;
 };
 
 export type pagos = {

@@ -1,49 +1,42 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DownloadingIcon from "@mui/icons-material/Downloading";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import {
-  Box,
-  DialogContent,
-  Grid,
-  IconButton,
-  ToggleButton,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, ToggleButton, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { ButtonsDetail } from "./ButtonsDetail";
-import { TooltipPersonalizado } from "./CustomizedTooltips";
-import ModalForm from "./ModalForm";
-import { Toast } from "../../utils/Toast";
 import { AuthService } from "../../services/AuthService";
-import Progress from "./Progress";
-import MUIXDataGrid from "./MUIXDataGrid";
 import { getItem } from "../../services/localStorage";
 import { base64ToArrayBuffer } from "../../utils/Files";
+import { Toast } from "../../utils/Toast";
+import { ButtonsDetail } from "./ButtonsDetail";
+import { TooltipPersonalizado } from "./CustomizedTooltips";
+import MUIXDataGrid from "./MUIXDataGrid";
+import ModalForm from "./ModalForm";
+import Progress from "./Progress";
 
 const VisorDocumentos = ({
   handleFunction,
-  obj,
+  idowner,
 }: {
   handleFunction: Function;
-  obj: any;
+  idowner: string;
 }) => {
   const [openSlider, setOpenSlider] = useState(true);
-  const [open, setOpen] = useState(false);
   const [verarchivo, setverarchivo] = useState(false);
-  const [vrows, setVrows] = useState({});
   const [data, setData] = useState([]);
   const [URLruta, setURLRuta] = useState<string>("");
   const user = JSON.parse(String(getItem("User"))) as any;
 
   const consulta = () => {
+    console.log("Visor de Documentos");
+    console.log(idowner);
     setOpenSlider(true);
     let data = {
       TIPO: 3,
-      P_IDOWNER: obj.id,
+      P_IDOWNER: idowner,
     };
 
     AuthService.adminfiles(data).then((res) => {
@@ -77,7 +70,7 @@ const VisorDocumentos = ({
 
     encontrados.map((item: any) => {
       const formData = new FormData();
-      formData.append("P_IDOWNER", obj.Id);
+      formData.append("P_IDOWNER", idowner);
       formData.append("P_CreadoPor", user.Id);
       formData.append("file", item.Archivo, item.NOMBRE);
       formData.append("nombreArchivo", item.NOMBRE);
@@ -167,7 +160,7 @@ const VisorDocumentos = ({
     AuthService.getFile(data).then((res) => {
       if (res.SUCCESS) {
         var bufferArray = base64ToArrayBuffer(String(res.RESPONSE.FILE));
-        var blobStore = new Blob([bufferArray], { type: res.RESPONSE.TIPO });
+        var blobStore = new Blob([bufferArray], { type: "application/pdf" });
         var data = window.URL.createObjectURL(blobStore);
         var link = document.createElement("a");
         document.body.appendChild(link);
@@ -243,17 +236,21 @@ const VisorDocumentos = ({
               title={"Eliminar"}
               handleFunction={handleAccion}
               show={true}
-              icon={<DeleteForeverIcon />}
+              icon={<DeleteForeverIcon color="error" />}
               row={v}
             ></ButtonsDetail>
-
-            <ButtonsDetail
-              title={"Ver"}
-              handleFunction={handleVer}
-              show={true}
-              icon={<RemoveRedEyeIcon />}
-              row={v}
-            ></ButtonsDetail>
+            {v.row.NombreFile &&
+            v.row.NombreFile.toLowerCase().endsWith(".pdf") ? (
+              <ButtonsDetail
+                title={"Ver"}
+                handleFunction={handleVer}
+                show={true}
+                icon={<RemoveRedEyeIcon />}
+                row={v}
+              ></ButtonsDetail>
+            ) : (
+              ""
+            )}
 
             <ButtonsDetail
               title={"Descargar"}
@@ -269,7 +266,6 @@ const VisorDocumentos = ({
   ];
 
   useEffect(() => {
-    console.log(obj);
     consulta();
   }, []);
 
@@ -318,37 +314,18 @@ const VisorDocumentos = ({
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <MUIXDataGrid columns={columns} rows={data} />
           </Grid>
-          <Grid item xs={6}>
-            {/* {URLruta !== "" ? (
+          <Grid item xs={12} sm={12} md={8} lg={8} style={{ height: "100vh" }}>
+            {verarchivo ? (
               <iframe width="100%" height="100%" src={URLruta} />
             ) : (
               ""
-            )} */}
+            )}
           </Grid>
         </Grid>
       </ModalForm>
-
-      {verarchivo ? (
-        <ModalForm title={"Visualización"} handleClose={handleCloseModal}>
-          <DialogContent dividers={true}>
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                {/* <h3>Nombre de archivo: {name}</h3> */}
-              </Grid>
-              <Grid item container justifyContent="center" xs={12}>
-                <div className="ContainerVisualizacionSPEI">
-                  <iframe width="100%" height="100%" src={URLruta} />
-                </div>
-              </Grid>
-            </Grid>
-          </DialogContent>
-        </ModalForm>
-      ) : (
-        ""
-      )}
     </div>
   );
 };

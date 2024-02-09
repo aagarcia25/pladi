@@ -1,19 +1,30 @@
-import { CircularProgress, Dialog, Grid, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Dialog,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 const Progress = ({ open, mensaje }: { open: boolean; mensaje?: string }) => {
   return (
     <Dialog
-      fullScreen
-      className="ContainerSliderProgress"
-      sx={{ zIndex: 2000 }}
+      sx={{
+        zIndex: 2000,
+        backdropFilter: "blur(5px)",
+      }}
       open={open}
     >
       <Grid
-        className="containerCenter"
         container
         direction="column"
         justifyContent="center"
         alignItems="center"
+        sx={{
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          padding: 2, // Add padding if needed
+        }}
       >
         <Grid
           item
@@ -23,7 +34,7 @@ const Progress = ({ open, mensaje }: { open: boolean; mensaje?: string }) => {
           alignItems="center"
         >
           <CircularProgress
-            size={200}
+            size={100}
             sx={{
               color: "#15212f",
             }}

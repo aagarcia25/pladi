@@ -1,5 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Grid, Stack, TextField } from "@mui/material";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { Grid, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,12 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
+import axios from "axios";
 import { Dayjs } from "dayjs";
 import * as React from "react";
 import { useState } from "react";
 import CustomizedDate from "../../components/share/CustomizedDate";
 import MsgAlert from "../../components/share/MsgAlert";
-import { AuthService } from "../../services/AuthService";
 import { getItem } from "../../services/localStorage";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -24,42 +25,59 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function InapModal({ handleClose }: { handleClose: Function }) {
+export default function InapModalSpei({
+  handleClose,
+  obj,
+}: {
+  handleClose: Function;
+  obj: any;
+}) {
   const [fstart, setfstart] = useState<Dayjs | null>();
-  const [fend, setfend] = useState<Dayjs | null>();
-  const [convenio, setconvenio] = useState<string>();
+  const [fpay, setfpay] = useState<Dayjs | null>();
+  const [newDoc, setNewDoc] = useState(Object);
+  const [namedoc, setnamedoc] = useState<string>("");
   const user = JSON.parse(String(getItem("User"))) as any;
   const handledatestar = (v: any) => {
     setfstart(v);
   };
 
-  const handledateend = (v: any) => {
-    setfend(v);
+  const handledatefpay = (v: any) => {
+    setfpay(v);
   };
 
-  const inserta = () => {
-    let data = {
-      TIPO: 1,
-      P_CreadoPor: user.Id,
-      P_FechaConveniogrlinicio: fstart,
-      P_FechaConveniogrlfin: fend,
-      P_NombreConvenio: convenio,
-    };
+  const handleNewFile = (event: any) => {
+    let file = event.target!.files[0]!;
+    console.log(file);
+    setNewDoc(file);
+    setnamedoc(file.name);
+  };
 
-    AuthService.inapGralAll(data).then((res) => {
-      if (res.NUMCODE == 200) {
-        MsgAlert(
-          "Información",
-          "Registro Agregado con correctamente",
-          "success"
-        );
-        setfstart(null);
-        setfend(null);
-        setconvenio("");
-      } else {
-        MsgAlert("Error", res.STRMESSAGE, "error");
-      }
-    });
+  const inserta = async () => {
+    const formData = new FormData();
+    formData.append("P_IdGral0103", obj);
+    formData.append("file", newDoc);
+    formData.append("nombreArchivo", namedoc);
+    formData.append("P_Id", "");
+    formData.append("TIPO", "1");
+    formData.append("P_CreadoPor", user.Id);
+    formData.append("P_FechaPresupuesto", String(fstart));
+    formData.append("P_FechaPAgo", String(fpay));
+    console.log(formData);
+    const response = await axios.post(
+      process.env.REACT_APP_APPLICATION_BASE_URL + "/inapGral010301All",
+      formData
+    );
+    console.log(response);
+    if (response.data.success) {
+      MsgAlert("Información", "Registro Agregado con correctamente", "success");
+      setfstart(null);
+      setfpay(null);
+      setNewDoc(null);
+      setnamedoc("");
+    } else {
+      console.error("Error al migrar el archivo:", response.data.error);
+      window.location.reload();
+    }
   };
 
   return (
@@ -95,39 +113,58 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
             <Grid item xs={12} sm={2} md={2} lg={2}>
               <CustomizedDate
                 value={fstart}
-                label={"Fecha Inicio"}
+                label={"Fecha de Entrega Presupuesto"}
                 onchange={handledatestar}
                 disabled={false}
               />
             </Grid>
+
             <Grid item xs={12} sm={2} md={2} lg={2}>
               <CustomizedDate
-                value={fend}
-                label={"Fecha Fin"}
-                onchange={handledateend}
+                value={fpay}
+                label={"Fecha de Pago"}
+                onchange={handledatefpay}
                 disabled={false}
               />
             </Grid>
-            <Grid item xs={12} sm={8} md={8} lg={8}>
-              <TextField
-                fullWidth
-                id="filled-multiline-static"
-                label="Convenio"
-                multiline
-                rows={4}
-                defaultValue=""
-                value={convenio}
-                onChange={(v) => {
-                  setconvenio(v.target.value);
-                }}
-              />
+            <Grid item xs={12} sm={2} md={2} lg={2}>
+              <Typography>Favor de Seleccionar el archivo:</Typography>
+              <Button value="check">
+                <IconButton
+                  color="primary"
+                  aria-label="upload documento"
+                  component="label"
+                  size="small"
+                >
+                  <input
+                    hidden
+                    accept=".pdf"
+                    type="file"
+                    value=""
+                    onChange={(event) => {
+                      handleNewFile(event);
+                    }}
+                  />
+                  <FileUploadIcon />
+                </IconButton>
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={2} md={2} lg={2}>
+              {namedoc != null ? (
+                <>
+                  <Typography>Archivo seleccionado:</Typography>
+                  <Typography>{namedoc}</Typography>
+                </>
+              ) : (
+                ""
+              )}
             </Grid>
           </Grid>
 
           <Grid
             container
-            justifyContent="center" // Centra horizontalmente en el contenedor
-            alignItems="center" // Centra verticalmente en el contenedor
+            justifyContent="center"
+            alignItems="center"
             marginTop={10}
           >
             <Stack direction="row" spacing={2}>

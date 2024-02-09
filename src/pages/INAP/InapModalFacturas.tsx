@@ -1,5 +1,11 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Grid, Stack, TextField } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  OutlinedInput,
+  Stack,
+  TextField,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -24,29 +30,34 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function InapModal({ handleClose }: { handleClose: Function }) {
+export default function InapModalFacturas({
+  handleClose,
+  obj,
+}: {
+  handleClose: Function;
+  obj: any;
+}) {
   const [fstart, setfstart] = useState<Dayjs | null>();
-  const [fend, setfend] = useState<Dayjs | null>();
-  const [convenio, setconvenio] = useState<string>();
+  const [factura, setfactura] = useState<string>();
+  const [monto, setmonto] = useState<string>();
+
   const user = JSON.parse(String(getItem("User"))) as any;
   const handledatestar = (v: any) => {
     setfstart(v);
   };
 
-  const handledateend = (v: any) => {
-    setfend(v);
-  };
-
   const inserta = () => {
+    console.log(obj);
     let data = {
       TIPO: 1,
+      P_IdGral01: obj.Id,
       P_CreadoPor: user.Id,
-      P_FechaConveniogrlinicio: fstart,
-      P_FechaConveniogrlfin: fend,
-      P_NombreConvenio: convenio,
+      P_FechaFactura: fstart,
+      P_Factura: factura,
+      P_Monto: monto,
     };
 
-    AuthService.inapGralAll(data).then((res) => {
+    AuthService.inapGral0103All(data).then((res) => {
       if (res.NUMCODE == 200) {
         MsgAlert(
           "Información",
@@ -54,8 +65,8 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
           "success"
         );
         setfstart(null);
-        setfend(null);
-        setconvenio("");
+        setfactura("");
+        setmonto("");
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
       }
@@ -95,30 +106,35 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
             <Grid item xs={12} sm={2} md={2} lg={2}>
               <CustomizedDate
                 value={fstart}
-                label={"Fecha Inicio"}
+                label={"Fecha Factura"}
                 onchange={handledatestar}
                 disabled={false}
               />
             </Grid>
-            <Grid item xs={12} sm={2} md={2} lg={2}>
-              <CustomizedDate
-                value={fend}
-                label={"Fecha Fin"}
-                onchange={handledateend}
-                disabled={false}
-              />
-            </Grid>
-            <Grid item xs={12} sm={8} md={8} lg={8}>
+
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Typography>Factura:</Typography>
               <TextField
                 fullWidth
                 id="filled-multiline-static"
-                label="Convenio"
-                multiline
-                rows={4}
+                rows={1}
                 defaultValue=""
-                value={convenio}
+                value={factura}
                 onChange={(v) => {
-                  setconvenio(v.target.value);
+                  setfactura(v.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Typography>Monto:</Typography>
+              <OutlinedInput
+                id="standard-adornment-amount"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+                value={monto}
+                onChange={(v) => {
+                  setmonto(v.target.value);
                 }}
               />
             </Grid>
@@ -126,8 +142,8 @@ export default function InapModal({ handleClose }: { handleClose: Function }) {
 
           <Grid
             container
-            justifyContent="center" // Centra horizontalmente en el contenedor
-            alignItems="center" // Centra verticalmente en el contenedor
+            justifyContent="center"
+            alignItems="center"
             marginTop={10}
           >
             <Stack direction="row" spacing={2}>
