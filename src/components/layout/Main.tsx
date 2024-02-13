@@ -338,7 +338,7 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home")}>
+              <ListItemButton onClick={() => navigate("/home/siregob")}>
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
