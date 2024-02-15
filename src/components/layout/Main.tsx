@@ -262,6 +262,18 @@ const Main = () => {
             </Collapse>
             <Tooltip
               title={
+                "Control y Administración de los Oficios Correspondientes a Municipios"
+              }
+            >
+              <ListItemButton onClick={() => navigate("/home")}>
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Oficios DAMOP" />
+              </ListItemButton>
+            </Tooltip>
+            <Tooltip
+              title={
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
@@ -272,12 +284,13 @@ const Main = () => {
                 <ListItemText primary="Oficios ONU" />
               </ListItemButton>
             </Tooltip>
+
             <Tooltip
               title={
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home")}>
+              <ListItemButton onClick={() => navigate("/home/ppi")}>
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>

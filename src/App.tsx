@@ -9,6 +9,7 @@ import Estatales from "./pages/Auditorias/Estatales/Estatales";
 import Federales from "./pages/Auditorias/Federales/Federales";
 import Inap from "./pages/INAP/Inap";
 import SIREGOB from "./pages/SIREGOB/SIREGOB";
+import PPI from "./pages/ProyectoInversion/PPI";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
             <Route path="Federales" element={<Federales />} />
             <Route path="inap" element={<Inap />} />
             <Route path="siregob" element={<SIREGOB />} />
+            <Route path="ppi" element={<PPI />} />
+            PPI
           </Route>
         </Routes>
       </BrowserRouter>
