@@ -1,6 +1,8 @@
 import { GridColDef } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MUIXDataGrid from "../../components/share/MUIXDataGrid";
+import { AuthService } from "../../services/AuthService";
+import MsgAlert from "../../components/share/MsgAlert";
 
 const PPI = () => {
   const [rows, setrows] = useState([]);
@@ -12,51 +14,58 @@ const PPI = () => {
     },
 
     {
-      field: "FechaCreacion",
-      headerName: "Fecha Creación",
-      description: "Fecha Creación",
-
+      field: "Noficio",
+      headerName: "Numero de Oficio",
+      description: "Numero de Oficio",
       width: 150,
     },
     {
-      field: "NAMEUSUARIO",
-      headerName: "Usuario Generador",
-      description: "Usuario Generador",
+      field: "TipoOficio",
+      headerName: "Tipo de Oficio",
+      description: "Tipo de Oficio",
       width: 150,
     },
     {
-      field: "NombreCuenta",
-      headerName: "Nombre de la Cuenta",
-      description: "Nombre de la Cuenta",
+      field: "Dependencia",
+      headerName: "Dependencia",
+      description: "Dependencia",
       width: 250,
     },
     {
-      field: "NombreBanco",
-      headerName: "Banco",
-      description: "Banco",
-      width: 150,
-    },
-
-    {
-      field: "NumeroCuenta",
-      headerName: "Cuenta",
-      description: "Cuenta",
-      width: 250,
-    },
-    {
-      field: "ClabeBancaria",
-      headerName: "Clabe",
-      description: "Clabe",
+      field: "Descripcion",
+      headerName: "Descripción",
+      description: "Descripción",
       width: 250,
     },
 
     {
-      field: "EstatusDescripcion",
-      headerName: "Estatus",
-      description: "Estatus",
+      field: "Importe",
+      headerName: "Importe",
+      description: "Importe",
       width: 250,
     },
   ];
+
+  const ProcesaData = (tipo: number, id?: string) => {
+    let data = {
+      TIPO: tipo,
+      P_Id: id,
+    };
+
+    AuthService.PPI(data).then((res) => {
+      if (res.NUMCODE == 200) {
+        if (tipo == 4) {
+          setrows(res.RESPONSE);
+        }
+      } else {
+        MsgAlert("Error", res.STRMESSAGE, "error");
+      }
+    });
+  };
+
+  useEffect(() => {
+    ProcesaData(4);
+  }, []);
   return (
     <div>
       <MUIXDataGrid columns={columns} rows={rows} />

@@ -34,4 +34,8 @@ export class AuthService {
   public static async migrafile(data: any) {
     return await post("migrafile", data);
   }
+
+  public static async PPI(data: any) {
+    return await post("PPI", data);
+  }
 }
