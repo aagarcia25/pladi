@@ -38,4 +38,8 @@ export class AuthService {
   public static async PPI(data: any) {
     return await post("PPI", data);
   }
+
+  public static async siregob(data: any) {
+    return await post("siregob", data);
+  }
 }
