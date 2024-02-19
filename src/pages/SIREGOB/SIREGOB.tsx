@@ -8,6 +8,7 @@ import { ButtonsDetail } from "../../components/share/ButtonsDetail";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import FeedIcon from "@mui/icons-material/Feed";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
 const SIREGOB = () => {
   const [rows, setrows] = useState([]);
 
@@ -31,14 +32,6 @@ const SIREGOB = () => {
         return (
           <>
             <ButtonsDetail
-              title={"Ver Carpeta"}
-              handleFunction={handleVerSub}
-              show={true}
-              icon={<DriveFolderUploadIcon />}
-              row={v}
-            ></ButtonsDetail>
-
-            <ButtonsDetail
               title={"Ver Archivo del Proceso de Adquicisión"}
               handleFunction={handleVerSub}
               show={true}
@@ -48,7 +41,7 @@ const SIREGOB = () => {
 
             <ButtonsDetail
               title={"Ver Entregables"}
-              handleFunction={handleVerSub}
+              handleFunction={handleVerEntregables}
               show={true}
               icon={<AutoStoriesIcon />}
               row={v}
@@ -103,6 +96,12 @@ const SIREGOB = () => {
     setopenModalFiles(true);
   };
 
+  const handleVerEntregables = (v: any) => {
+    console.log(v);
+    setidowner(v.row.Id + "\\Entregables");
+    setopenModalFiles(true);
+  };
+
   const ProcesaData = (tipo: number, id?: string) => {
     let data = {
       TIPO: tipo,
@@ -129,10 +128,10 @@ const SIREGOB = () => {
       <MUIXDataGrid columns={columns} rows={rows} />
 
       {openModalFiles ? (
-        <VisorDocumentos
+        <VisorDocumentosOficios
           handleFunction={handleClose}
-          idowner={idowner}
-        ></VisorDocumentos>
+          obj={idowner}
+        ></VisorDocumentosOficios>
       ) : (
         ""
       )}

@@ -1,14 +1,16 @@
-import { GridColDef } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
-import MUIXDataGrid from "../../components/share/MUIXDataGrid";
-import { AuthService } from "../../services/AuthService";
-import MsgAlert from "../../components/share/MsgAlert";
-import { ButtonsDetail } from "../../components/share/ButtonsDetail";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import VisorDocumentos from "../../components/share/VisorDocumentos";
+import { GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { ButtonsDetail } from "../../components/share/ButtonsDetail";
+import MUIXDataGrid from "../../components/share/MUIXDataGrid";
+import MsgAlert from "../../components/share/MsgAlert";
+import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
+import { AuthService } from "../../services/AuthService";
+import Progress from "../../components/share/Progress";
 const PPI = () => {
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
+  const [open, setopen] = useState(false);
   const [rows, setrows] = useState([]);
 
   const handleClose = () => {
@@ -49,6 +51,11 @@ const PPI = () => {
       },
     },
     {
+      field: "Fecha",
+      headerName: "Fecha",
+      width: 100,
+    },
+    {
       field: "Noficio",
       headerName: "Numero de Oficio",
       description: "Numero de Oficio",
@@ -82,6 +89,7 @@ const PPI = () => {
   ];
 
   const ProcesaData = (tipo: number, id?: string) => {
+    setopen(true);
     let data = {
       TIPO: tipo,
       P_Id: id,
@@ -91,6 +99,7 @@ const PPI = () => {
       if (res.NUMCODE == 200) {
         if (tipo == 4) {
           setrows(res.RESPONSE);
+          setopen(false);
         }
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
@@ -103,13 +112,14 @@ const PPI = () => {
   }, []);
   return (
     <div>
+      <Progress open={open}></Progress>
       <MUIXDataGrid columns={columns} rows={rows} />
 
       {openModalFiles ? (
-        <VisorDocumentos
+        <VisorDocumentosOficios
           handleFunction={handleClose}
-          idowner={idowner}
-        ></VisorDocumentos>
+          obj={idowner}
+        ></VisorDocumentosOficios>
       ) : (
         ""
       )}

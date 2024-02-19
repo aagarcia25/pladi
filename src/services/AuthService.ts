@@ -42,4 +42,16 @@ export class AuthService {
   public static async siregob(data: any) {
     return await post("siregob", data);
   }
+
+  public static async getListFiles(data: any) {
+    return await post("getListFiles", data);
+  }
+
+  public static async deletedFile(data: any) {
+    return await post("deletedFile", data);
+  }
+
+  public static async deletedFolder(data: any) {
+    return await post("deletedFolder", data);
+  }
 }
