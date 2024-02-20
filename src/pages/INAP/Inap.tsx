@@ -702,14 +702,16 @@ const Inap = () => {
                   key={item.Id}
                   style={{
                     background:
-                      item.FechaConvenioinicio.includes(searchTerm) ||
-                      item.FechaConveniofin.includes(searchTerm) ||
-                      item.NombreConvenio.includes(searchTerm) ||
-                      item.Objetivo.includes(searchTerm) ||
-                      item.Monto.includes(searchTerm) ||
-                      item.FechaFiniquito.includes(searchTerm)
-                        ? "yellow"
-                        : "transparent",
+                      searchTerm !== ""
+                        ? item.FechaConvenioinicio.includes(searchTerm) ||
+                          item.FechaConveniofin.includes(searchTerm) ||
+                          item.NombreConvenio.includes(searchTerm) ||
+                          item.Objetivo.includes(searchTerm) ||
+                          item.Monto.includes(searchTerm) ||
+                          item.FechaFiniquito.includes(searchTerm)
+                          ? "yellow"
+                          : "transparent"
+                        : "",
                   }}
                 >
                   <TableCell component="th" scope="row">
@@ -1010,11 +1012,13 @@ const Inap = () => {
                   sx={{ "& > *": { borderBottom: "unset" } }}
                   style={{
                     background:
-                      row.FechaConveniogrlinicio.includes(searchTerm) ||
-                      row.FechaConveniogrlfin.includes(searchTerm) ||
-                      row.NombreConvenio.includes(searchTerm)
-                        ? "yellow"
-                        : "transparent",
+                      searchTerm !== ""
+                        ? row.FechaConveniogrlinicio.includes(searchTerm) ||
+                          row.FechaConveniogrlfin.includes(searchTerm) ||
+                          row.NombreConvenio.includes(searchTerm)
+                          ? "yellow"
+                          : "transparent"
+                        : "",
                   }}
                 >
                   <TableCell component="th" scope="row">
