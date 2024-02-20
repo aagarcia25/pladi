@@ -160,16 +160,16 @@ const Main = () => {
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <Grid item xs={1}>
-              {data!.Nombre}
+            <Grid item xs={1} style={{ fontSize: "15px" }}>
+              {data!.Nombre} {data!.ApellidoPaterno} {data!.ApellidoMaterno}
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.Puesto}
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.CorreoElectronico}
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.Telefono}
             </Grid>
           </Grid>

@@ -41,11 +41,12 @@ const ModalForm = ({ children, title, handleClose }: Props) => {
               justifyContent="flex-end"
               paddingRight={1}
             >
-              <Tooltip title="Salir">
+              <Tooltip title="Salir" style={{ border: "2px solid red" }}>
                 <IconButton
                   size="large"
                   className="cerrar"
                   aria-label="close"
+                  color="error"
                   onClick={() => handleClose()}
                 >
                   <CloseIcon />
