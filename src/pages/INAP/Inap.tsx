@@ -740,7 +740,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          openmodalFiles(row.Id + "\\Entregables");
+                          openmodalFiles(item.Id + "\\Entregables");
                         }}
                       >
                         <Tooltip title={"Entregables"}>
@@ -751,7 +751,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          openmodalFiles(row.Id + "\\Actas");
+                          openmodalFiles(item.Id + "\\Actas");
                         }}
                       >
                         <Tooltip title={"Actas"}>
@@ -762,7 +762,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          openmodalFiles(row.Id + "\\Facturas");
+                          openmodalFiles(item.Id + "\\Facturas");
                         }}
                       >
                         <Tooltip title={"Facturas"}>
