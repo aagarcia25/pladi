@@ -1,14 +1,12 @@
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import FeedIcon from "@mui/icons-material/Feed";
 import { GridColDef } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { ButtonsDetail } from "../../components/share/ButtonsDetail";
 import MUIXDataGrid from "../../components/share/MUIXDataGrid";
 import MsgAlert from "../../components/share/MsgAlert";
-import { AuthService } from "../../services/AuthService";
-import VisorDocumentos from "../../components/share/VisorDocumentos";
-import { ButtonsDetail } from "../../components/share/ButtonsDetail";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import FeedIcon from "@mui/icons-material/Feed";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
+import { AuthService } from "../../services/AuthService";
 const SIREGOB = () => {
   const [rows, setrows] = useState([]);
 
