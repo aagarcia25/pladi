@@ -1,5 +1,5 @@
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import { Box, Container, Grid, TextField } from "@mui/material";
+import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { AuthService } from "../../services/AuthService";
 import MsgAlert from "../../components/share/MsgAlert";
@@ -74,17 +74,6 @@ const Busqueda = () => {
     });
   };
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setSearchTerm(value);
-    //clearTimeout(searchTimeout);
-    const searchTimeout = setTimeout(() => {
-      // Lógica para realizar la búsqueda
-      console.log("Búsqueda realizada:", value);
-      consulta();
-    }, 2000); // Ajusta el tiempo de espera según tus necesidades
-  };
-
   const consulta = () => {
     if (searchTerm !== "") {
       setOpenSlider(true);
@@ -150,17 +139,31 @@ const Busqueda = () => {
     <Container fixed>
       <Progress open={openSlider}></Progress>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
             <ManageSearchIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
             <TextField
               id="input-with-sx"
               label="Buscar"
               variant="standard"
+              value={searchTerm}
+              onChange={(v) => {
+                setSearchTerm(v.target.value);
+              }}
               fullWidth
-              onChange={handleSearchChange}
             />
           </Box>
+        </Grid>
+        <Grid item xs={2}>
+          <Button
+            onClick={() => {
+              consulta();
+            }}
+            variant="contained"
+            color="success"
+          >
+            Buscar
+          </Button>
         </Grid>
       </Grid>
 
