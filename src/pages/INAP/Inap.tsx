@@ -1,15 +1,12 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import {
   Box,
@@ -30,30 +27,19 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import MsgAlert from "../../components/share/MsgAlert";
 import Progress from "../../components/share/Progress";
-import {
-  actas,
-  entregables,
-  facturas,
-  inapgral,
-  inapgral01,
-  pagos,
-} from "../../interfaces/IShare";
+import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
+import { inapgral, inapgral01 } from "../../interfaces/IShare";
 import { AuthService } from "../../services/AuthService";
 import { getItem } from "../../services/localStorage";
 import { formatFecha } from "../../utils/FormatDate";
 import { Toast } from "../../utils/Toast";
 import InapModal from "./InapModal";
-import InapModalActas from "./InapModalActas";
 import InapModalConvenio from "./InapModalConvenio";
-import InapModalEntregables from "./InapModalEntregables";
-import InapModalFacturas from "./InapModalFacturas";
-import axios from "axios";
-import InapModalSpei from "./InapModalSpei";
-import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
 const Inap = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const user = JSON.parse(String(getItem("User"))) as any;
@@ -573,102 +559,102 @@ const Inap = () => {
   //   );
   // };
 
-  const renderEntregable = (dataEN: any, data: any) => {
-    return (
-      <>
-        <Box sx={{ margin: 1 }}>
-          <>
-            <Typography variant="h6" gutterBottom component="div">
-              Entregables
-            </Typography>
-            <Table size="small" aria-label="purchases">
-              <TableHead>
-                <TableRow key={Math.random()}>
-                  <TableCell>
-                    <ButtonGroup>
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          setRow(data);
-                          setopenModalEntregables(true);
-                        }}
-                      >
-                        <Tooltip title={"Agregar Registro"}>
-                          <AddCircleOutlineIcon color="success" />
-                        </Tooltip>
-                      </Button>
+  // const renderEntregable = (dataEN: any, data: any) => {
+  //   return (
+  //     <>
+  //       <Box sx={{ margin: 1 }}>
+  //         <>
+  //           <Typography variant="h6" gutterBottom component="div">
+  //             Entregables
+  //           </Typography>
+  //           <Table size="small" aria-label="purchases">
+  //             <TableHead>
+  //               <TableRow key={Math.random()}>
+  //                 <TableCell>
+  //                   <ButtonGroup>
+  //                     <Button
+  //                       style={{ color: "black" }}
+  //                       onClick={() => {
+  //                         setRow(data);
+  //                         setopenModalEntregables(true);
+  //                       }}
+  //                     >
+  //                       <Tooltip title={"Agregar Registro"}>
+  //                         <AddCircleOutlineIcon color="success" />
+  //                       </Tooltip>
+  //                     </Button>
 
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => handleButtonClick(1, data.Id)}
-                      >
-                        <Tooltip title={"Subir Plantilla"}>
-                          <CloudUploadIcon color="info" />
-                        </Tooltip>
-                      </Button>
-                    </ButtonGroup>
-                  </TableCell>
-                  <TableCell>Clave</TableCell>
-                  <TableCell>Entregable</TableCell>
-                  <TableCell>PDF Entregable</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dataEN.map((item: entregables) => (
-                  <>
-                    {item.Id != null ? (
-                      <TableRow key={item.Id}>
-                        <TableCell component="th" scope="row">
-                          <ButtonGroup variant="text">
-                            <Button
-                              style={{ color: "black" }}
-                              onClick={() => {
-                                alert("Agregar");
-                              }}
-                            >
-                              <Tooltip title={"Editar Registro"}>
-                                <EditIcon color="info" />
-                              </Tooltip>
-                            </Button>
-                            <Button
-                              style={{ color: "black" }}
-                              onClick={() => {
-                                handleBorrar(3, item.Id);
-                              }}
-                            >
-                              <Tooltip title={"Eliminar Registro"}>
-                                <DeleteForeverIcon color="error" />
-                              </Tooltip>
-                            </Button>
-                          </ButtonGroup>
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                          {item.inap0101_Clave}
-                        </TableCell>
-                        <TableCell component="th" scope="row" align="left">
-                          {item.inap0101_Nombre}
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          align="left"
-                          onClick={() => openmodalFiles(item.Id)}
-                        >
-                          <FilePresentIcon sx={{ color: "black" }} />
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ))}
-              </TableBody>
-            </Table>
-          </>
-        </Box>
-      </>
-    );
-  };
+  //                     <Button
+  //                       style={{ color: "black" }}
+  //                       onClick={() => handleButtonClick(1, data.Id)}
+  //                     >
+  //                       <Tooltip title={"Subir Plantilla"}>
+  //                         <CloudUploadIcon color="info" />
+  //                       </Tooltip>
+  //                     </Button>
+  //                   </ButtonGroup>
+  //                 </TableCell>
+  //                 <TableCell>Clave</TableCell>
+  //                 <TableCell>Entregable</TableCell>
+  //                 <TableCell>PDF Entregable</TableCell>
+  //               </TableRow>
+  //             </TableHead>
+  //             <TableBody>
+  //               {dataEN.map((item: entregables) => (
+  //                 <>
+  //                   {item.Id != null ? (
+  //                     <TableRow key={item.Id}>
+  //                       <TableCell component="th" scope="row">
+  //                         <ButtonGroup variant="text">
+  //                           <Button
+  //                             style={{ color: "black" }}
+  //                             onClick={() => {
+  //                               alert("Agregar");
+  //                             }}
+  //                           >
+  //                             <Tooltip title={"Editar Registro"}>
+  //                               <EditIcon color="info" />
+  //                             </Tooltip>
+  //                           </Button>
+  //                           <Button
+  //                             style={{ color: "black" }}
+  //                             onClick={() => {
+  //                               handleBorrar(3, item.Id);
+  //                             }}
+  //                           >
+  //                             <Tooltip title={"Eliminar Registro"}>
+  //                               <DeleteForeverIcon color="error" />
+  //                             </Tooltip>
+  //                           </Button>
+  //                         </ButtonGroup>
+  //                       </TableCell>
+  //                       <TableCell component="th" scope="row">
+  //                         {item.inap0101_Clave}
+  //                       </TableCell>
+  //                       <TableCell component="th" scope="row" align="left">
+  //                         {item.inap0101_Nombre}
+  //                       </TableCell>
+  //                       <TableCell
+  //                         component="th"
+  //                         scope="row"
+  //                         align="left"
+  //                         onClick={() => openmodalFiles(item.Id)}
+  //                       >
+  //                         <FilePresentIcon sx={{ color: "black" }} />
+  //                       </TableCell>
+  //                     </TableRow>
+  //                   ) : (
+  //                     ""
+  //                   )}
+  //                 </>
+  //               ))}
+  //             </TableBody>
+  //           </Table>
+  //         </>
+  //       </Box>
+  //     </>
+  //   );
+  // };
 
   const renderConvenioEspecifico = (dataCE: any, row: any) => {
     return (
@@ -712,7 +698,20 @@ const Inap = () => {
           <TableBody>
             {dataCE.map((item: inapgral01) => (
               <>
-                <TableRow key={item.Id}>
+                <TableRow
+                  key={item.Id}
+                  style={{
+                    background:
+                      item.FechaConvenioinicio.includes(searchTerm) ||
+                      item.FechaConveniofin.includes(searchTerm) ||
+                      item.NombreConvenio.includes(searchTerm) ||
+                      item.Objetivo.includes(searchTerm) ||
+                      item.Monto.includes(searchTerm) ||
+                      item.FechaFiniquito.includes(searchTerm)
+                        ? "yellow"
+                        : "transparent",
+                  }}
+                >
                   <TableCell component="th" scope="row">
                     <ButtonGroup variant="text">
                       <Button
@@ -1009,6 +1008,14 @@ const Inap = () => {
                 <TableRow
                   key={row.Id}
                   sx={{ "& > *": { borderBottom: "unset" } }}
+                  style={{
+                    background:
+                      row.FechaConveniogrlinicio.includes(searchTerm) ||
+                      row.FechaConveniogrlfin.includes(searchTerm) ||
+                      row.NombreConvenio.includes(searchTerm)
+                        ? "yellow"
+                        : "transparent",
+                  }}
                 >
                   <TableCell component="th" scope="row">
                     <ButtonGroup variant="text">

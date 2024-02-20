@@ -4,6 +4,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import MenuIcon from "@mui/icons-material/Menu";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import {
   Box,
   Collapse,
@@ -143,14 +144,22 @@ const Main = () => {
               <ChevronLeftIcon />
             </IconButton>
             <div style={{ flex: 1 }} />
-            <img
-              src={logo}
-              alt="Descripción"
+            <IconButton
               style={{
-                width: "50%",
-                height: "50%",
+                width: "90%",
+                height: "90%",
               }}
-            />
+              onClick={() => navigate("/home/")}
+            >
+              <img
+                src={logo}
+                alt="Descripción"
+                style={{
+                  width: "60%",
+                  height: "60%",
+                }}
+              />
+            </IconButton>
           </Toolbar>
           <Divider />
 
@@ -186,6 +195,15 @@ const Main = () => {
             <Divider sx={{ my: 1 }} />
           </List> */}
           <List component="nav">
+            <Tooltip title={"Búsqueda General"}>
+              <ListItemButton onClick={() => navigate("/home/bus")}>
+                <ListItemIcon>
+                  <ManageSearchIcon />
+                </ListItemIcon>
+                <ListItemText primary="Búsqueda General" />
+              </ListItemButton>
+            </Tooltip>
+
             <Tooltip
               title={
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
