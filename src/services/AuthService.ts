@@ -54,4 +54,12 @@ export class AuthService {
   public static async deletedFolder(data: any) {
     return await post("deletedFolder", data);
   }
+
+  public static async busquedaGeneral(data: any) {
+    return await post("busquedaGeneral", data);
+  }
+
+  public static async getFileBusqueda(data: any) {
+    return await post("getFileBusqueda", data);
+  }
 }
