@@ -143,7 +143,6 @@ const Main = () => {
               <ChevronLeftIcon />
             </IconButton>
             <div style={{ flex: 1 }} />
-            {"   "}
             <img
               src={logo}
               alt="Descripción"

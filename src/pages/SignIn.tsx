@@ -16,6 +16,8 @@ import LoginIcon from "@mui/icons-material/Login";
 import { AuthService } from "../services/AuthService";
 import Swal from "sweetalert2";
 import { setItem } from "../services/localStorage";
+import logo from "../assets/logonuevoleon.png";
+import tesoreria from "../assets/tesoreria.png";
 const SignIn = () => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -58,6 +60,9 @@ const SignIn = () => {
           md={7}
           sx={{
             // Cambiar a sx=
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             backgroundRepeat: "no-repeat",
             backgroundColor:
               theme.palette.mode === "light" // Cambiar a theme.palette.mode
@@ -66,7 +71,9 @@ const SignIn = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        />
+        >
+          <img src={tesoreria} alt="Descripción" style={{ maxWidth: "100%" }} />
+        </Grid>
         <Grid
           item
           xs={12}
@@ -81,19 +88,20 @@ const SignIn = () => {
             alignItems: "center",
           }}
         >
-          <Box
-            sx={{
-              paddingTop: "20px",
-              textAlign: "center", // Centra el texto horizontalmente
+          <img
+            src={logo}
+            alt="Descripción"
+            style={{
+              width: "25%",
+              height: "25%",
+              objectFit: "contain",
             }}
-          >
-            {/* <img src={logo} alt="Descripción de la imagen" /> */}
-          </Box>
+          />
           <Typography
             variant={isSmallScreen ? "subtitle1" : "h5"}
             sx={{
               textAlign: "center", // Centra el texto horizontalmente
-              margin: "20px",
+              marginTop: "20px",
             }}
           >
             Digitalización de Documentos
