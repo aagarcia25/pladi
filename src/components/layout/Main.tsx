@@ -319,37 +319,13 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => handleClick(2)}>
+              <ListItemButton onClick={() => navigate("/home/pf")}>
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Paquete Fiscal" />
-                {openMenus[2] ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
             </Tooltip>
-            <Collapse in={openMenus[2]} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Federales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Ley de Ingresos" />
-                </ListItemButton>
-
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Estatales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Ley de Egresos" />
-                </ListItemButton>
-              </List>
-            </Collapse>
 
             <Tooltip
               title={

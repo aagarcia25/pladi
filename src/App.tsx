@@ -11,6 +11,7 @@ import Inap from "./pages/INAP/Inap";
 import SIREGOB from "./pages/SIREGOB/SIREGOB";
 import PPI from "./pages/ProyectoInversion/PPI";
 import Busqueda from "./pages/Busqueda/Busqueda";
+import PaqueteFiscal from "./pages/PaqueteFiscal/PaqueteFiscal";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="inap" element={<Inap />} />
             <Route path="siregob" element={<SIREGOB />} />
             <Route path="ppi" element={<PPI />} />
-            PPI
+            <Route path="pf" element={<PaqueteFiscal />} />
           </Route>
         </Routes>
       </BrowserRouter>
