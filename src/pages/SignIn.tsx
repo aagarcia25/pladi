@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import Progress from "../components/share/Progress";
+import LoginIcon from "@mui/icons-material/Login";
 import {
-  Box,
   Button,
   CssBaseline,
   Grid,
@@ -11,13 +9,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginIcon from "@mui/icons-material/Login";
-import { AuthService } from "../services/AuthService";
 import Swal from "sweetalert2";
-import { setItem } from "../services/localStorage";
 import logo from "../assets/logonuevoleon.png";
 import tesoreria from "../assets/tesoreria.png";
+import Progress from "../components/share/Progress";
+import { AuthService } from "../services/AuthService";
+import { setItem } from "../services/localStorage";
 const SignIn = () => {
   const navigate = useNavigate();
   const theme = useTheme();

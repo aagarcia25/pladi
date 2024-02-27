@@ -107,8 +107,8 @@ const SIREGOB = () => {
     };
 
     AuthService.siregob(data).then((res) => {
-      if (res.NUMCODE == 200) {
-        if (tipo == 1) {
+      if (res.NUMCODE === 200) {
+        if (tipo === 1) {
           setrows(res.RESPONSE);
         }
       } else {
