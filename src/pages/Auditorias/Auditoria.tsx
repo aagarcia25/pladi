@@ -76,7 +76,7 @@ const Auditoria = () => {
       headerName: "Oficio Contestación",
       description: "Oficio Contestación",
       sortable: false,
-      width: 50,
+      width: 150,
       renderCell: (v) => {
         return (
           <>
