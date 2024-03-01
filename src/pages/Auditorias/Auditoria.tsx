@@ -80,13 +80,17 @@ const Auditoria = () => {
       renderCell: (v) => {
         return (
           <>
-            <ButtonsDetail
-              title={"Ver Carpeta"}
-              handleFunction={handleVerSub2}
-              show={true}
-              icon={<DriveFolderUploadIcon />}
-              row={v}
-            ></ButtonsDetail>
+            {v.row.NumOficioContestacion ? (
+              <ButtonsDetail
+                title={"Ver Carpeta"}
+                handleFunction={handleVerSub2}
+                show={true}
+                icon={<DriveFolderUploadIcon />}
+                row={v}
+              ></ButtonsDetail>
+            ) : (
+              ""
+            )}
           </>
         );
       },
