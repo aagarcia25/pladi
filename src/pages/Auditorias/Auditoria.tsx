@@ -24,7 +24,22 @@ const Auditoria = () => {
     const fecha = new Date(`${anio}-${mes}-${dia}`);
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
-    setidowner("\\AUDITORIA\\" + anioObtenido + "\\" + v.row.Folio);
+    setidowner("\\AUDITORIA\\FOLIOS\\" + anioObtenido + "\\" + v.row.Folio);
+    setopenModalFiles(true);
+  };
+
+  const handleVerSub2 = (v: any) => {
+    console.log(v);
+    const [dia, mes, anio] = v.row.FechaOficio.split("/");
+    const fecha = new Date(`${anio}-${mes}-${dia}`);
+    const anioObtenido = fecha.getFullYear();
+    console.log(anioObtenido);
+    setidowner(
+      "\\AUDITORIA\\CONTESTACION\\" +
+        anioObtenido +
+        "\\" +
+        v.row.NumOficioContestacion
+    );
     setopenModalFiles(true);
   };
 
@@ -47,6 +62,27 @@ const Auditoria = () => {
             <ButtonsDetail
               title={"Ver Carpeta"}
               handleFunction={handleVerSub}
+              show={true}
+              icon={<DriveFolderUploadIcon />}
+              row={v}
+            ></ButtonsDetail>
+          </>
+        );
+      },
+    },
+    {
+      field: "oficioContestacion",
+      disableExport: true,
+      headerName: "Oficio Contestación",
+      description: "Oficio Contestación",
+      sortable: false,
+      width: 50,
+      renderCell: (v) => {
+        return (
+          <>
+            <ButtonsDetail
+              title={"Ver Carpeta"}
+              handleFunction={handleVerSub2}
               show={true}
               icon={<DriveFolderUploadIcon />}
               row={v}
