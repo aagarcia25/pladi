@@ -24,8 +24,8 @@ const Auditoria = () => {
     const fecha = new Date(`${anio}-${mes}-${dia}`);
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
-    //setidowner("\\AUDITORIA"+v.row.Anio + "\\OFICIO_" + tipo);
-    // setopenModalFiles(true);
+    setidowner("\\AUDITORIA" + v.row.Anio + "\\" + v.row.Folio);
+    setopenModalFiles(true);
   };
 
   const columns: GridColDef[] = [
