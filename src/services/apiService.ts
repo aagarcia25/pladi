@@ -31,7 +31,7 @@ export const post = async function (url: string, body: any) {
   let header = await getHeaderInfo();
   try {
     let resp = await axios.post(
-      process.env.REACT_APP_APPLICATION_BASE_URL + url,
+      "http://localhost:8585/api/pladi/" + url,
       body,
       header
     );
@@ -44,10 +44,10 @@ export const post = async function (url: string, body: any) {
 export const get = async function (url: any, params: any = {}) {
   let header = await getHeaderInfo();
   try {
-    let resp = await axios.get(
-      process.env.REACT_APP_APPLICATION_BASE_URL + url,
-      { ...header, params }
-    );
+    let resp = await axios.get("http://localhost:8585/api/pladi/" + url, {
+      ...header,
+      params,
+    });
     return handleResponse(resp.data);
   } catch (err: any) {
     return handleResponse(err.response);

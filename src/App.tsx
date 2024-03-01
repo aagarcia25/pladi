@@ -1,17 +1,14 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SignIn from "./pages/SignIn";
+import "./App.css";
 import Main from "./components/layout/Main";
-import Home from "./pages/Home";
-import Estatales from "./pages/Auditorias/Estatales/Estatales";
-import Federales from "./pages/Auditorias/Federales/Federales";
-import Inap from "./pages/INAP/Inap";
-import SIREGOB from "./pages/SIREGOB/SIREGOB";
-import PPI from "./pages/ProyectoInversion/PPI";
+import Auditoria from "./pages/Auditorias/Auditoria";
 import Busqueda from "./pages/Busqueda/Busqueda";
+import Home from "./pages/Home";
+import Inap from "./pages/INAP/Inap";
 import PaqueteFiscal from "./pages/PaqueteFiscal/PaqueteFiscal";
+import PPI from "./pages/ProyectoInversion/PPI";
+import SIREGOB from "./pages/SIREGOB/SIREGOB";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
@@ -23,12 +20,11 @@ function App() {
           <Route path="/home/*" element={<Main />}>
             <Route index element={<Home />} />
             <Route path="bus" element={<Busqueda />} />
-            <Route path="Estatales" element={<Estatales />} />
-            <Route path="Federales" element={<Federales />} />
             <Route path="inap" element={<Inap />} />
             <Route path="siregob" element={<SIREGOB />} />
             <Route path="ppi" element={<PPI />} />
             <Route path="pf" element={<PaqueteFiscal />} />
+            <Route path="auditoria" element={<Auditoria />} />
           </Route>
         </Routes>
       </BrowserRouter>

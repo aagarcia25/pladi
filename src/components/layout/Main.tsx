@@ -209,37 +209,13 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => handleClick(0)}>
+              <ListItemButton onClick={() => navigate("/home/auditoria")}>
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Auditorías" />
-                {openMenus[0] ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
             </Tooltip>
-            <Collapse in={openMenus[0]} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Federales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Federales" />
-                </ListItemButton>
-
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Estatales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Estatales" />
-                </ListItemButton>
-              </List>
-            </Collapse>
 
             <Tooltip
               title={

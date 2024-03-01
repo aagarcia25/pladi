@@ -177,7 +177,7 @@ const Inap = () => {
         formData.append("P_ID", id);
         formData.append("P_CreadoPor", user.Id);
         const response = await axios.post(
-          process.env.REACT_APP_APPLICATION_BASE_URL + "/migradata",
+          "http://localhost:8585/api/pladi/" + "/migradata",
           formData
         );
         console.log("respuesta de archivo");
