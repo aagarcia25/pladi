@@ -24,7 +24,7 @@ const Auditoria = () => {
     const fecha = new Date(`${anio}-${mes}-${dia}`);
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
-    setidowner("\\AUDITORIA" + v.row.Anio + "\\" + v.row.Folio);
+    setidowner("\\AUDITORIA\\" + anioObtenido + "\\" + v.row.Folio);
     setopenModalFiles(true);
   };
 
