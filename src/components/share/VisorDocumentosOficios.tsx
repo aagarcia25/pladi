@@ -78,7 +78,7 @@ const VisorDocumentosOficios = ({
       formData.append("file", item.Archivo, item.NOMBRE);
       formData.append("nombreArchivo", item.NOMBRE);
       let p = axios.post(
-        "http://localhost:8585/api/pladi/" + "saveFile",
+        "http://10.200.4.176:8585/api/pladi/" + "saveFile",
         formData,
         {
           headers: {
@@ -158,13 +158,17 @@ const VisorDocumentosOficios = ({
       formData.append("P_ROUTE", explorerRoute + "/" + v);
 
       axios
-        .post("http://localhost:8585/api/pladi/" + "createfolder", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "X-Requested-With": "XMLHttpRequest",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
+        .post(
+          "http://10.200.4.176:8585/api/pladi/" + "createfolder",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "X-Requested-With": "XMLHttpRequest",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
         .then((response) => {
           if (response.data.SUCCESS) {
             console.log(response.data);
