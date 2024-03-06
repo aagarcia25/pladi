@@ -69,99 +69,13 @@ const Inap = () => {
   const [dataFac, setdataFac] = useState([]);
   const [dataPD, setDataPD] = useState([]);
   const [tipoCarga, settipoCarga] = useState<number>(0);
-
+  const permiso = JSON.parse(String(getItem("Tipo"))) as any;
   const toggleRow = (rowId: string) => {
     setOpenRows((prevOpenRows: Record<string, boolean>) => {
       const isOpen = prevOpenRows[rowId] || false;
       return { ...prevOpenRows, [rowId]: !isOpen };
     });
   };
-
-  // const toggleRow01 = (rowId: string) => {
-  //   setOpenRows01((prevOpenRows: Record<string, boolean>) => {
-  //     const isOpen = prevOpenRows[rowId] || false;
-  //     return { ...prevOpenRows, [rowId]: !isOpen };
-  //   });
-  // };
-
-  // const toggleRow02 = (rowId: string) => {
-  //   setOpenRows02((prevOpenRows: Record<string, boolean>) => {
-  //     const isOpen = prevOpenRows[rowId] || false;
-  //     return { ...prevOpenRows, [rowId]: !isOpen };
-  //   });
-  // };
-
-  // const refrecatabla = () => {
-  //   setOpenRows((prevOpenRows: Record<string, boolean>) => {
-  //     const isOpen = Object.values(prevOpenRows).some((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !isOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-
-  //   setOpenRows01((prevOpenRows: Record<string, boolean>) => {
-  //     const isOpen = Object.values(prevOpenRows).some((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !isOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-
-  //   setOpenRows02((prevOpenRows: Record<string, boolean>) => {
-  //     const isOpen = Object.values(prevOpenRows).some((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !isOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-
-  //   // refrecatabla1();
-  // };
-
-  // const refrecatabla1 = () => {
-  //   setOpenRows((prevOpenRows: Record<string, boolean>) => {
-  //     const areAllOpen = Object.values(prevOpenRows).every((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !areAllOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-
-  //   setOpenRows01((prevOpenRows: Record<string, boolean>) => {
-  //     const areAllOpen = Object.values(prevOpenRows).every((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !areAllOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-
-  //   setOpenRows02((prevOpenRows: Record<string, boolean>) => {
-  //     const areAllOpen = Object.values(prevOpenRows).every((value) => value);
-  //     const updatedRows: Record<string, boolean> = {};
-
-  //     for (const key in prevOpenRows) {
-  //       updatedRows[key] = !areAllOpen;
-  //     }
-
-  //     return updatedRows;
-  //   });
-  // };
 
   const handleFileChange = async (event: any) => {
     try {
@@ -177,7 +91,7 @@ const Inap = () => {
         formData.append("P_ID", id);
         formData.append("P_CreadoPor", user.Id);
         const response = await axios.post(
-          "http://10.200.4.176:8585/api/pladi/" + "/migradata",
+          "http://localhost:8585/api/pladi/" + "/migradata",
           formData
         );
         console.log("respuesta de archivo");
@@ -254,408 +168,6 @@ const Inap = () => {
     });
   };
 
-  // const renderPagos = (dataPD: any, row: any) => {
-  //   return (
-  //     <Box sx={{ margin: 1 }}>
-  //       <>
-  //         <Table size="small" aria-label="purchases">
-  //           <TableHead>
-  //             <TableRow>
-  //               <TableCell align="center" colSpan={5}>
-  //                 Detalle de Pago
-  //               </TableCell>
-  //             </TableRow>
-  //             <TableRow key={Math.random()}>
-  //               <TableCell>
-  //                 <Button
-  //                   style={{ color: "black" }}
-  //                   onClick={() => {
-  //                     setRow(row);
-  //                     setopenModalSpei(true);
-  //                   }}
-  //                 >
-  //                   <Tooltip title={"Agregar Registro"}>
-  //                     <AddCircleOutlineIcon color="success" />
-  //                   </Tooltip>
-  //                 </Button>
-  //               </TableCell>
-  //               <TableCell>Fecha Entrega Presupuesto</TableCell>
-  //               <TableCell>Fecha de Pago</TableCell>
-  //               <TableCell>Nombre SPEI</TableCell>
-  //               <TableCell>PDF SPEI</TableCell>
-  //             </TableRow>
-  //           </TableHead>
-  //           <TableBody>
-  //             {dataPD.map((item: pagos) => (
-  //               <>
-  //                 {item.Id != null ? (
-  //                   <TableRow key={item.Id}>
-  //                     <TableCell component="th" scope="row">
-  //                       <ButtonGroup variant="text">
-  //                         <Button
-  //                           style={{ color: "black" }}
-  //                           onClick={() => {
-  //                             alert("Agregar");
-  //                           }}
-  //                         >
-  //                           <Tooltip title={"Editar Registro"}>
-  //                             <EditIcon color="info" />
-  //                           </Tooltip>
-  //                         </Button>
-  //                         <Button
-  //                           style={{ color: "black" }}
-  //                           onClick={() => {
-  //                             alert("Agregar");
-  //                           }}
-  //                         >
-  //                           <Tooltip title={"Eliminar Registro"}>
-  //                             <DeleteForeverIcon color="error" />
-  //                           </Tooltip>
-  //                         </Button>
-  //                       </ButtonGroup>
-  //                     </TableCell>
-  //                     <TableCell component="th" scope="row" align="left">
-  //                       {formatFecha(item.FechaPresupuesto)}
-  //                     </TableCell>
-  //                     <TableCell component="th" scope="row" align="left">
-  //                       {formatFecha(item.FechaPAgo)}
-  //                     </TableCell>
-  //                     <TableCell component="th" scope="row" align="left">
-  //                       {item.NombreFile}
-  //                     </TableCell>
-  //                     <TableCell
-  //                       component="th"
-  //                       scope="row"
-  //                       align="left"
-  //                       onClick={() => {
-  //                         setruta(item.RouteSpei);
-  //                         setnombrefile(item.NombreFile);
-  //                         setopenModalFilessimple(true);
-  //                       }}
-  //                     >
-  //                       <Tooltip title={"Ver Archivo"}>
-  //                         <VisibilityIcon sx={{ color: "black" }} />
-  //                       </Tooltip>
-  //                     </TableCell>
-  //                   </TableRow>
-  //                 ) : (
-  //                   ""
-  //                 )}
-  //               </>
-  //             ))}
-  //           </TableBody>
-  //         </Table>
-  //       </>
-  //     </Box>
-  //   );
-  // };
-
-  // const renderActas = (dataEN: any, data: any) => {
-  //   return (
-  //     <>
-  //       <Box sx={{ margin: 1 }}>
-  //         <>
-  //           <Typography variant="h6" gutterBottom component="div">
-  //             Actas
-  //           </Typography>
-  //           <Table size="small" aria-label="purchases">
-  //             <TableHead>
-  //               <TableRow key={Math.random()}>
-  //                 <TableCell>
-  //                   <Button
-  //                     style={{ color: "black" }}
-  //                     onClick={() => {
-  //                       setopenModalActas(true);
-  //                       setRow(data);
-  //                     }}
-  //                   >
-  //                     <Tooltip title={"Agregar Registro"}>
-  //                       <AddCircleOutlineIcon color="success" />
-  //                     </Tooltip>
-  //                   </Button>
-  //                 </TableCell>
-  //                 <TableCell>Fecha acta de entrega</TableCell>
-  //                 <TableCell>Acta</TableCell>
-  //                 <TableCell>PDF Acta de entrega</TableCell>
-  //               </TableRow>
-  //             </TableHead>
-  //             <TableBody>
-  //               {dataEN.map((item: actas) => (
-  //                 <>
-  //                   {item.Id != null ? (
-  //                     <TableRow key={item.Id}>
-  //                       <TableCell component="th" scope="row">
-  //                         <ButtonGroup variant="text">
-  //                           <Button
-  //                             style={{ color: "black" }}
-  //                             onClick={() => {
-  //                               alert("Agregar");
-  //                             }}
-  //                           >
-  //                             <Tooltip title={"Editar Registro"}>
-  //                               <EditIcon color="info" />
-  //                             </Tooltip>
-  //                           </Button>
-  //                           <Button
-  //                             style={{ color: "black" }}
-  //                             onClick={() => {
-  //                               alert("Agregar");
-  //                             }}
-  //                           >
-  //                             <Tooltip title={"Eliminar Registro"}>
-  //                               <DeleteForeverIcon color="error" />
-  //                             </Tooltip>
-  //                           </Button>
-  //                         </ButtonGroup>
-  //                       </TableCell>
-  //                       <TableCell component="th" scope="row" align="left">
-  //                         {formatFecha(item.inap0102_FechaActa)}
-  //                       </TableCell>
-  //                       <TableCell component="th" scope="row" align="left">
-  //                         {item.inap0102_NombreActa}
-  //                       </TableCell>
-  //                       <TableCell
-  //                         component="th"
-  //                         scope="row"
-  //                         align="left"
-  //                         onClick={() => openmodalFiles(item.Id)}
-  //                       >
-  //                         <FilePresentIcon sx={{ color: "black" }} />
-  //                       </TableCell>
-  //                     </TableRow>
-  //                   ) : (
-  //                     ""
-  //                   )}
-  //                 </>
-  //               ))}
-  //             </TableBody>
-  //           </Table>
-  //         </>
-  //       </Box>
-  //     </>
-  //   );
-  // };
-
-  // const renderFacturas = (dataEN: any, data: any) => {
-  //   return (
-  //     <>
-  //       <Box sx={{ margin: 1 }}>
-  //         <>
-  //           <Typography variant="h6" gutterBottom component="div">
-  //             Facturas
-  //           </Typography>
-  //           <Table size="small" aria-label="purchases">
-  //             <TableHead>
-  //               <TableRow key={Math.random()}>
-  //                 <TableCell>
-  //                   <Button
-  //                     style={{ color: "black" }}
-  //                     onClick={() => {
-  //                       setopenModalFacturas(true);
-  //                       setRow(data);
-  //                     }}
-  //                   >
-  //                     <Tooltip title={"Agregar Registro"}>
-  //                       <AddCircleOutlineIcon color="success" />
-  //                     </Tooltip>
-  //                   </Button>
-  //                 </TableCell>
-  //                 <TableCell>Fecha de factura </TableCell>
-  //                 <TableCell>Factura </TableCell>
-  //                 <TableCell>Monto</TableCell>
-  //                 <TableCell>Documentos</TableCell>
-  //               </TableRow>
-  //             </TableHead>
-  //             <TableBody>
-  //               {dataEN.map((item: facturas) => (
-  //                 <>
-  //                   {item.Id != null ? (
-  //                     <>
-  //                       <TableRow key={item.Id}>
-  //                         <TableCell component="th" scope="row">
-  //                           <ButtonGroup variant="text">
-  //                             <Button
-  //                               style={{ color: "black" }}
-  //                               onClick={() => {
-  //                                 ProcesaData01(7, item.Id);
-  //                                 toggleRow02(item.Id);
-  //                               }}
-  //                             >
-  //                               <Tooltip title={"Agregar Registro"}>
-  //                                 {openRows02[item.Id] ? (
-  //                                   <KeyboardArrowUpIcon />
-  //                                 ) : (
-  //                                   <KeyboardArrowDownIcon />
-  //                                 )}
-  //                               </Tooltip>
-  //                             </Button>
-
-  //                             <Button
-  //                               style={{ color: "black" }}
-  //                               onClick={() => {
-  //                                 alert("Agregar");
-  //                               }}
-  //                             >
-  //                               <Tooltip title={"Editar Registro"}>
-  //                                 <EditIcon color="info" />
-  //                               </Tooltip>
-  //                             </Button>
-  //                             <Button
-  //                               style={{ color: "black" }}
-  //                               onClick={() => {
-  //                                 alert("Agregar");
-  //                               }}
-  //                             >
-  //                               <Tooltip title={"Eliminar Registro"}>
-  //                                 <DeleteForeverIcon color="error" />
-  //                               </Tooltip>
-  //                             </Button>
-  //                           </ButtonGroup>
-  //                         </TableCell>
-  //                         <TableCell component="th" scope="row" align="left">
-  //                           {formatFecha(item.inap0103_FechaFactura)}
-  //                         </TableCell>
-  //                         <TableCell component="th" scope="row" align="left">
-  //                           {item.inap0103_Factura}
-  //                         </TableCell>
-
-  //                         <TableCell component="th" scope="row" align="left">
-  //                           {item.inap0103_Monto}
-  //                         </TableCell>
-  //                         <TableCell
-  //                           component="th"
-  //                           scope="row"
-  //                           align="left"
-  //                           onClick={() => openmodalFiles(item.Id)}
-  //                         >
-  //                           <FilePresentIcon sx={{ color: "black" }} />
-  //                         </TableCell>
-  //                       </TableRow>
-  //                       <TableRow>
-  //                         <TableCell
-  //                           style={{ paddingBottom: 0, paddingTop: 0 }}
-  //                           colSpan={6}
-  //                         >
-  //                           <Collapse
-  //                             in={openRows02[item.Id]}
-  //                             timeout="auto"
-  //                             unmountOnExit
-  //                           >
-  //                             {renderPagos(dataPD, item.Id)}
-  //                           </Collapse>
-  //                         </TableCell>
-  //                       </TableRow>
-  //                     </>
-  //                   ) : (
-  //                     ""
-  //                   )}
-  //                 </>
-  //               ))}
-  //             </TableBody>
-  //           </Table>
-  //         </>
-  //       </Box>
-  //     </>
-  //   );
-  // };
-
-  // const renderEntregable = (dataEN: any, data: any) => {
-  //   return (
-  //     <>
-  //       <Box sx={{ margin: 1 }}>
-  //         <>
-  //           <Typography variant="h6" gutterBottom component="div">
-  //             Entregables
-  //           </Typography>
-  //           <Table size="small" aria-label="purchases">
-  //             <TableHead>
-  //               <TableRow key={Math.random()}>
-  //                 <TableCell>
-  //                   <ButtonGroup>
-  //                     <Button
-  //                       style={{ color: "black" }}
-  //                       onClick={() => {
-  //                         setRow(data);
-  //                         setopenModalEntregables(true);
-  //                       }}
-  //                     >
-  //                       <Tooltip title={"Agregar Registro"}>
-  //                         <AddCircleOutlineIcon color="success" />
-  //                       </Tooltip>
-  //                     </Button>
-
-  //                     <Button
-  //                       style={{ color: "black" }}
-  //                       onClick={() => handleButtonClick(1, data.Id)}
-  //                     >
-  //                       <Tooltip title={"Subir Plantilla"}>
-  //                         <CloudUploadIcon color="info" />
-  //                       </Tooltip>
-  //                     </Button>
-  //                   </ButtonGroup>
-  //                 </TableCell>
-  //                 <TableCell>Clave</TableCell>
-  //                 <TableCell>Entregable</TableCell>
-  //                 <TableCell>PDF Entregable</TableCell>
-  //               </TableRow>
-  //             </TableHead>
-  //             <TableBody>
-  //               {dataEN.map((item: entregables) => (
-  //                 <>
-  //                   {item.Id != null ? (
-  //                     <TableRow key={item.Id}>
-  //                       <TableCell component="th" scope="row">
-  //                         <ButtonGroup variant="text">
-  //                           <Button
-  //                             style={{ color: "black" }}
-  //                             onClick={() => {
-  //                               alert("Agregar");
-  //                             }}
-  //                           >
-  //                             <Tooltip title={"Editar Registro"}>
-  //                               <EditIcon color="info" />
-  //                             </Tooltip>
-  //                           </Button>
-  //                           <Button
-  //                             style={{ color: "black" }}
-  //                             onClick={() => {
-  //                               handleBorrar(3, item.Id);
-  //                             }}
-  //                           >
-  //                             <Tooltip title={"Eliminar Registro"}>
-  //                               <DeleteForeverIcon color="error" />
-  //                             </Tooltip>
-  //                           </Button>
-  //                         </ButtonGroup>
-  //                       </TableCell>
-  //                       <TableCell component="th" scope="row">
-  //                         {item.inap0101_Clave}
-  //                       </TableCell>
-  //                       <TableCell component="th" scope="row" align="left">
-  //                         {item.inap0101_Nombre}
-  //                       </TableCell>
-  //                       <TableCell
-  //                         component="th"
-  //                         scope="row"
-  //                         align="left"
-  //                         onClick={() => openmodalFiles(item.Id)}
-  //                       >
-  //                         <FilePresentIcon sx={{ color: "black" }} />
-  //                       </TableCell>
-  //                     </TableRow>
-  //                   ) : (
-  //                     ""
-  //                   )}
-  //                 </>
-  //               ))}
-  //             </TableBody>
-  //           </Table>
-  //         </>
-  //       </Box>
-  //     </>
-  //   );
-  // };
-
   const renderConvenioEspecifico = (dataCE: any, row: any) => {
     return (
       <Box sx={{ margin: 1 }}>
@@ -666,26 +178,22 @@ const Inap = () => {
           <TableHead>
             <TableRow key={Math.random()}>
               <TableCell>
-                <ButtonGroup>
-                  <Button
-                    style={{ color: "black" }}
-                    onClick={() => {
-                      setopenModalConvenio(true);
-                    }}
-                  >
-                    <Tooltip title={"Agregar Registro"}>
-                      <AddCircleOutlineIcon color="success" />
-                    </Tooltip>
-                  </Button>
-                  {/* <Button
-                    style={{ color: "black" }}
-                    onClick={() => handleButtonClick(1, row.Id)}
-                  >
-                    <Tooltip title={"Subir Plantilla"}>
-                      <CloudUploadIcon color="info" />
-                    </Tooltip>
-                  </Button> */}
-                </ButtonGroup>
+                {permiso === "ADMIN" ? (
+                  <ButtonGroup>
+                    <Button
+                      style={{ color: "black" }}
+                      onClick={() => {
+                        setopenModalConvenio(true);
+                      }}
+                    >
+                      <Tooltip title={"Agregar Registro"}>
+                        <AddCircleOutlineIcon color="success" />
+                      </Tooltip>
+                    </Button>
+                  </ButtonGroup>
+                ) : (
+                  ""
+                )}
               </TableCell>
               <TableCell>Fecha Convenio Específico</TableCell>
               <TableCell>Nombre Convenio Específico</TableCell>
@@ -716,32 +224,38 @@ const Inap = () => {
                 >
                   <TableCell component="th" scope="row">
                     <ButtonGroup variant="text">
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          alert("Agregar");
-                        }}
-                      >
-                        <Tooltip title={"Editar Registro"}>
-                          <EditIcon color="info" />
-                        </Tooltip>
-                      </Button>
+                      {permiso === "ADMIN" ? (
+                        <>
+                          <Button
+                            style={{ color: "black" }}
+                            onClick={() => {
+                              alert("Agregar");
+                            }}
+                          >
+                            <Tooltip title={"Editar Registro"}>
+                              <EditIcon color="info" />
+                            </Tooltip>
+                          </Button>
+
+                          <Button
+                            style={{ color: "black" }}
+                            onClick={() => {
+                              handleBorrar(2, item.Id);
+                            }}
+                          >
+                            <Tooltip title={"Eliminar Registro"}>
+                              <DeleteForeverIcon color="error" />
+                            </Tooltip>
+                          </Button>
+                        </>
+                      ) : (
+                        ""
+                      )}
 
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          handleBorrar(2, item.Id);
-                        }}
-                      >
-                        <Tooltip title={"Eliminar Registro"}>
-                          <DeleteForeverIcon color="error" />
-                        </Tooltip>
-                      </Button>
-
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          openmodalFiles(item.Id + "\\Entregables");
+                          openmodalFiles(item.Id + "/Entregables");
                         }}
                       >
                         <Tooltip title={"Entregables"}>
@@ -752,7 +266,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          openmodalFiles(item.Id + "\\Actas");
+                          openmodalFiles(item.Id + "/Actas");
                         }}
                       >
                         <Tooltip title={"Actas"}>
@@ -763,7 +277,7 @@ const Inap = () => {
                       <Button
                         style={{ color: "black" }}
                         onClick={() => {
-                          openmodalFiles(item.Id + "\\Facturas");
+                          openmodalFiles(item.Id + "/Facturas");
                         }}
                       >
                         <Tooltip title={"Facturas"}>
@@ -865,17 +379,17 @@ const Inap = () => {
             }
           });
         } else if (tipo == 3) {
-          AuthService.inapGral0101All(data).then((res) => {
-            if (res.SUCCESS) {
-              Toast.fire({
-                icon: "success",
-                title: "¡Registro Eliminado!",
-              });
-              ProcesaData(4);
-            } else {
-              Swal.fire("¡Error!", res.STRMESSAGE, "error");
-            }
-          });
+          // AuthService.inapGral0101All(data).then((res) => {
+          //   if (res.SUCCESS) {
+          //     Toast.fire({
+          //       icon: "success",
+          //       title: "¡Registro Eliminado!",
+          //     });
+          //     ProcesaData(4);
+          //   } else {
+          //     Swal.fire("¡Error!", res.STRMESSAGE, "error");
+          //   }
+          // });
         }
       } else if (result.isDenied) {
         Swal.fire("No se realizaron cambios", "", "info");
@@ -933,53 +447,36 @@ const Inap = () => {
       <Progress open={open}></Progress>
       <Grid container justifyContent="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <ToggleButtonGroup value="check" aria-label="text alignment">
-            <Tooltip title={"Agregar Registro"}>
-              <ToggleButton
-                style={{ color: "black" }}
-                value="left"
-                aria-label="left aligned"
-                onClick={() => {
-                  openmodal();
-                }}
-              >
-                <AddCircleOutlineIcon color="success" />
-              </ToggleButton>
-            </Tooltip>
+          {permiso === "ADMIN" ? (
+            <ToggleButtonGroup value="check" aria-label="text alignment">
+              <Tooltip title={"Agregar Registro"}>
+                <ToggleButton
+                  style={{ color: "black" }}
+                  value="left"
+                  aria-label="left aligned"
+                  onClick={() => {
+                    openmodal();
+                  }}
+                >
+                  <AddCircleOutlineIcon color="success" />
+                </ToggleButton>
+              </Tooltip>
 
-            {/* <Tooltip title={"Exportar a Excel"}>
-              <ToggleButton
-                style={{ color: "black" }}
-                value="left"
-                aria-label="left aligned"
-              >
-                <FileDownloadIcon />
-              </ToggleButton>
-            </Tooltip> */}
-
-            {/* <Tooltip title={"Migrar a Excel"}>
-              <ToggleButton
-                style={{ color: "black" }}
-                value="left"
-                aria-label="left aligned"
-                onClick={() => handleButtonClick(0, "1")}
-              >
-                <CloudUploadIcon color="info" />
-              </ToggleButton>
-            </Tooltip> */}
-
-            <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
-              <ManageSearchIcon
-                sx={{ color: "action.active", mr: 1, my: 0.5 }}
-              />
-              <TextField
-                id="input-with-sx"
-                label="Buscar"
-                variant="standard"
-                onChange={handleSearchChange}
-              />
-            </Box>
-          </ToggleButtonGroup>
+              <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
+                <ManageSearchIcon
+                  sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                />
+                <TextField
+                  id="input-with-sx"
+                  label="Buscar"
+                  variant="standard"
+                  onChange={handleSearchChange}
+                />
+              </Box>
+            </ToggleButtonGroup>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
       <TableContainer
@@ -1039,26 +536,32 @@ const Inap = () => {
                         </Tooltip>
                       </Button>
 
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          alert("Agregar");
-                        }}
-                      >
-                        <Tooltip title={"Editar Registro"}>
-                          <EditIcon color="info" />
-                        </Tooltip>
-                      </Button>
-                      <Button
-                        style={{ color: "black" }}
-                        onClick={() => {
-                          handleBorrar(1, row.Id);
-                        }}
-                      >
-                        <Tooltip title={"Eliminar Registro"}>
-                          <DeleteForeverIcon color="error" />
-                        </Tooltip>
-                      </Button>
+                      {permiso === "ADMIN" ? (
+                        <>
+                          <Button
+                            style={{ color: "black" }}
+                            onClick={() => {
+                              alert("Agregar");
+                            }}
+                          >
+                            <Tooltip title={"Editar Registro"}>
+                              <EditIcon color="info" />
+                            </Tooltip>
+                          </Button>
+                          <Button
+                            style={{ color: "black" }}
+                            onClick={() => {
+                              handleBorrar(1, row.Id);
+                            }}
+                          >
+                            <Tooltip title={"Eliminar Registro"}>
+                              <DeleteForeverIcon color="error" />
+                            </Tooltip>
+                          </Button>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </ButtonGroup>
                   </TableCell>
                   <TableCell component="th" scope="row" align="left">
@@ -1109,32 +612,7 @@ const Inap = () => {
       ) : (
         ""
       )}
-      {/* {openModalEntregables ? (
-        <InapModalEntregables
-          handleClose={handleClose}
-          obj={row}
-        ></InapModalEntregables>
-      ) : (
-        ""
-      )} */}
-      {/* {openModalActas ? (
-        <InapModalActas handleClose={handleClose} obj={row}></InapModalActas>
-      ) : (
-        ""
-      )} */}
-      {/* {openModalFacturas ? (
-        <InapModalFacturas
-          handleClose={handleClose}
-          obj={row}
-        ></InapModalFacturas>
-      ) : (
-        ""
-      )} */}
-      {/* {openModalSpei ? (
-        <InapModalSpei handleClose={handleClose} obj={row}></InapModalSpei>
-      ) : (
-        ""
-      )} */}
+
       {openModalFiles ? (
         <VisorDocumentosOficios
           handleFunction={handleClose}

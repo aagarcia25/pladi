@@ -184,16 +184,7 @@ const Main = () => {
           </Grid>
 
           <Divider></Divider>
-          {/* <List component="nav">
-            <ListItemButton onClick={() => navigate("/home/Federales")}>
-              <ListItemIcon>
-                <FiberManualRecordIcon />
-              </ListItemIcon>
-              <ListItemText primary="Investigación" />
-            </ListItemButton>
 
-            <Divider sx={{ my: 1 }} />
-          </List> */}
           <List component="nav">
             <Tooltip title={"Búsqueda General"}>
               <ListItemButton onClick={() => navigate("/home/bus")}>

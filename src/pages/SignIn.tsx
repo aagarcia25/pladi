@@ -32,8 +32,8 @@ const SignIn = () => {
     AuthService.login(data).then((res) => {
       if (res.NUMCODE == 200) {
         localStorage.clear();
-        setItem(true, "l1");
         setItem(res.RESPONSE[0], "User");
+        setItem(res.RESPONSE[0].Tipo, "Tipo");
         navigate("/home/");
       } else {
         localStorage.clear();

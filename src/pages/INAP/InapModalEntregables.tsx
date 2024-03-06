@@ -50,19 +50,19 @@ export default function InapModalEntregables({
       P_Nombre: convenio,
     };
 
-    AuthService.inapGral0101All(data).then((res) => {
-      if (res.NUMCODE == 200) {
-        MsgAlert(
-          "Información",
-          "Registro Agregado con correctamente",
-          "success"
-        );
-        setfstart(null);
-        setconvenio("");
-      } else {
-        MsgAlert("Error", res.STRMESSAGE, "error");
-      }
-    });
+    // AuthService.inapGral0101All(data).then((res) => {
+    //   if (res.NUMCODE == 200) {
+    //     MsgAlert(
+    //       "Información",
+    //       "Registro Agregado con correctamente",
+    //       "success"
+    //     );
+    //     setfstart(null);
+    //     setconvenio("");
+    //   } else {
+    //     MsgAlert("Error", res.STRMESSAGE, "error");
+    //   }
+    // });
   };
 
   return (

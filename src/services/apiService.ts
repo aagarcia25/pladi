@@ -31,7 +31,7 @@ export const post = async function (url: string, body: any) {
   let header = await getHeaderInfo();
   try {
     let resp = await axios.post(
-      "http://10.200.4.176:8585/api/pladi/" + url,
+      "http://localhost:8585/api/pladi/" + url,
       body,
       header
     );
@@ -44,7 +44,7 @@ export const post = async function (url: string, body: any) {
 export const get = async function (url: any, params: any = {}) {
   let header = await getHeaderInfo();
   try {
-    let resp = await axios.get("http://10.200.4.176:8585/api/pladi/" + url, {
+    let resp = await axios.get("http://localhost:8585/api/pladi/" + url, {
       ...header,
       params,
     });
