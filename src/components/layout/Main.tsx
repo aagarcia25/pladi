@@ -83,7 +83,7 @@ const Main = () => {
   const [open, setOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState([false, false, false]);
   const data = JSON.parse(String(getItem("User"))) as any;
-
+  const [selectedOption, setSelectedOption] = useState("");
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -187,11 +187,25 @@ const Main = () => {
 
           <List component="nav">
             <Tooltip title={"Búsqueda General"}>
-              <ListItemButton onClick={() => navigate("/home/bus")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("bus");
+                  navigate("/home/bus");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "bus" ? "#DBA901" : "transparent",
+                }}
+              >
                 <ListItemIcon>
                   <ManageSearchIcon />
                 </ListItemIcon>
-                <ListItemText primary="Búsqueda General" />
+                <ListItemText
+                  primary="Búsqueda General"
+                  style={{
+                    color: selectedOption === "bus" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
 
@@ -200,11 +214,25 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home/auditoria")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("auditoria");
+                  navigate("/home/auditoria");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "auditoria" ? "#DBA901" : "transparent",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Auditorías" />
+                <ListItemText
+                  primary="Auditorías"
+                  style={{
+                    color: selectedOption === "auditoria" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
 
@@ -274,11 +302,25 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home/ppi")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("ppi");
+                  navigate("/home/ppi");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "ppi" ? "#DBA901" : "transparent",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Proyectos de Inversión" />
+                <ListItemText
+                  primary="Proyectos de Inversión"
+                  style={{
+                    color: selectedOption === "ppi" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
             <Tooltip
@@ -286,11 +328,25 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home/pf")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("pf");
+                  navigate("/home/pf");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "pf" ? "#DBA901" : "transparent",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Paquete Fiscal" />
+                <ListItemText
+                  primary="Paquete Fiscal"
+                  style={{
+                    color: selectedOption === "pf" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
 
@@ -299,11 +355,24 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes al INAP"
               }
             >
-              <ListItemButton onClick={() => navigate("/home/inap")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("inap");
+                  navigate("/home/inap");
+                }}
+                style={{
+                  backgroundColor: selectedOption === "inap" ? "#DBA901" : "",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="INAP" />
+                <ListItemText
+                  primary="INAP"
+                  style={{
+                    color: selectedOption === "inap" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
             <Tooltip
@@ -311,11 +380,25 @@ const Main = () => {
                 "Control y Administración de los Oficios Correspondientes a Auditorias"
               }
             >
-              <ListItemButton onClick={() => navigate("/home/siregob")}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("siregob");
+                  navigate("/home/siregob");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "siregob" ? "#DBA901" : "",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="SIREGOB" />
+                <ListItemText
+                  primary="SIREGOB"
+                  style={{
+                    color: selectedOption === "siregob" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
             <Divider></Divider>
@@ -323,7 +406,7 @@ const Main = () => {
               <ListItemIcon>
                 <CancelIcon />
               </ListItemIcon>
-              <ListItemText primary="Cerrar Sessión" />
+              <ListItemText primary="Cerrar Sesión" />
             </ListItemButton>
           </List>
         </Drawer>

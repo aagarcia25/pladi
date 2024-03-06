@@ -48,33 +48,29 @@ const Inap = () => {
   const [open, setopen] = useState(false);
   const [openModal, setopenModal] = useState(false);
   const [openModalConvenio, setopenModalConvenio] = useState(false);
-  const [openModalEntregables, setopenModalEntregables] = useState(false);
-  const [openModalActas, setopenModalActas] = useState(false);
-  const [openModalFacturas, setopenModalFacturas] = useState(false);
-  const [openModalSpei, setopenModalSpei] = useState(false);
   const [openModalFiles, setopenModalFiles] = useState(false);
-  const [openModalFilessimple, setopenModalFilessimple] = useState(false);
   const [openRows, setOpenRows] = useState<{ [key: string]: boolean }>({});
-  const [openRows01, setOpenRows01] = useState<{ [key: string]: boolean }>({});
   const [openRows02, setOpenRows02] = useState<{ [key: string]: boolean }>({});
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [row, setRow] = useState({});
   const [data, setData] = useState([]);
-
+  const [tipoCarga, settipoCarga] = useState<number>(0);
   const [ruta, setruta] = useState<string>("");
   const [nombrefile, setnombrefile] = useState<string>("");
   const [dataConvenio, setdataConvenio] = useState([]);
-  const [dataEn, setdataEn] = useState([]);
-  const [dataAc, setdataAc] = useState([]);
-  const [dataFac, setdataFac] = useState([]);
-  const [dataPD, setDataPD] = useState([]);
-  const [tipoCarga, settipoCarga] = useState<number>(0);
   const permiso = JSON.parse(String(getItem("Tipo"))) as any;
   const toggleRow = (rowId: string) => {
     setOpenRows((prevOpenRows: Record<string, boolean>) => {
       const isOpen = prevOpenRows[rowId] || false;
       return { ...prevOpenRows, [rowId]: !isOpen };
     });
+  };
+
+  const handleClose = () => {
+    ProcesaData(4);
+    setopenModalFiles(false);
+    setopenModal(false);
+    setopenModalConvenio(false);
   };
 
   const handleFileChange = async (event: any) => {
@@ -114,14 +110,6 @@ const Inap = () => {
     }
   };
 
-  const handleButtonClick = (tipo: number, obj: string) => {
-    settipoCarga(tipo);
-    setid(obj);
-    // Verificar que fileInputRef.current no sea nulo antes de usarlo
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
   const ProcesaData01 = (tipo: number, idGral: string) => {
     let data = {
       TIPO: tipo,
@@ -132,14 +120,6 @@ const Inap = () => {
       if (res.NUMCODE == 200) {
         if (tipo == 5) {
           setdataConvenio(res.RESPONSE);
-        } else if (tipo == 7) {
-          setDataPD(res.RESPONSE);
-        } else if (tipo == 8) {
-          setdataEn(res.RESPONSE);
-        } else if (tipo == 9) {
-          setdataAc(res.RESPONSE);
-        } else if (tipo == 10) {
-          setdataFac(res.RESPONSE);
         }
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
@@ -406,28 +386,10 @@ const Inap = () => {
     setopenModalFiles(true);
   };
 
-  const handleClosefile = () => {
-    setopenModalFilessimple(false);
-  };
-  const handleClose = () => {
-    ProcesaData(4);
-    setopenModalFiles(false);
-    setopenModal(false);
-    setopenModalConvenio(false);
-    setopenModalEntregables(false);
-    setopenModalActas(false);
-    setopenModalFacturas(false);
-    setopenModalSpei(false);
-
-    // refrecatabla();
-  };
-
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchTerm(value);
-    //clearTimeout(searchTimeout);
     const searchTimeout = setTimeout(() => {
-      // Lógica para realizar la búsqueda
       console.log("Búsqueda realizada:", value);
     }, 2000); // Ajusta el tiempo de espera según tus necesidades
   };
@@ -447,36 +409,37 @@ const Inap = () => {
       <Progress open={open}></Progress>
       <Grid container justifyContent="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          {permiso === "ADMIN" ? (
-            <ToggleButtonGroup value="check" aria-label="text alignment">
-              <Tooltip title={"Agregar Registro"}>
-                <ToggleButton
-                  style={{ color: "black" }}
-                  value="left"
-                  aria-label="left aligned"
-                  onClick={() => {
-                    openmodal();
-                  }}
-                >
-                  <AddCircleOutlineIcon color="success" />
-                </ToggleButton>
-              </Tooltip>
-
-              <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
-                <ManageSearchIcon
-                  sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                />
-                <TextField
-                  id="input-with-sx"
-                  label="Buscar"
-                  variant="standard"
-                  onChange={handleSearchChange}
-                />
-              </Box>
-            </ToggleButtonGroup>
-          ) : (
-            ""
-          )}
+          <ToggleButtonGroup value="check" aria-label="text alignment">
+            {permiso === "ADMIN" ? (
+              <>
+                <Tooltip title={"Agregar Registro"}>
+                  <ToggleButton
+                    style={{ color: "black" }}
+                    value="left"
+                    aria-label="left aligned"
+                    onClick={() => {
+                      openmodal();
+                    }}
+                  >
+                    <AddCircleOutlineIcon color="success" />
+                  </ToggleButton>
+                </Tooltip>
+              </>
+            ) : (
+              ""
+            )}
+            <Box border={1} sx={{ display: "flex", alignItems: "flex-end" }}>
+              <ManageSearchIcon
+                sx={{ color: "action.active", mr: 1, my: 0.5 }}
+              />
+              <TextField
+                id="input-with-sx"
+                label="Buscar"
+                variant="standard"
+                onChange={handleSearchChange}
+              />
+            </Box>
+          </ToggleButtonGroup>
         </Grid>
       </Grid>
       <TableContainer

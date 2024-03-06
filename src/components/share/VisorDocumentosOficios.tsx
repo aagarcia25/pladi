@@ -20,6 +20,7 @@ import Progress from "./Progress";
 import MUIXDataGrid from "./MUIXDataGrid";
 import { base64ToArrayBuffer } from "../../utils/Files";
 import ButtonsDeletedFolder from "./ButtonsDeletedFolder";
+import { getItem } from "../../services/localStorage";
 const VisorDocumentosOficios = ({
   handleFunction,
   obj,
@@ -30,6 +31,7 @@ const VisorDocumentosOficios = ({
   const [openSlider, setOpenSlider] = useState(false);
   const [opendialog, setopendialog] = useState(false);
   const [verarchivo, setverarchivo] = useState(false);
+  const permiso = JSON.parse(String(getItem("Tipo"))) as any;
   const [data, setData] = useState([]);
   const [URLruta, setURLRuta] = useState<string>("");
   const [breadcrumbs, setBreadcrumbs] = useState([obj]);
@@ -78,7 +80,7 @@ const VisorDocumentosOficios = ({
       formData.append("file", item.Archivo, item.NOMBRE);
       formData.append("nombreArchivo", item.NOMBRE);
       let p = axios.post(
-        "http://10.200.4.176:8585/api/pladi/" + "saveFile",
+        "http://localhost:8585/api/pladi/" + "saveFile",
         formData,
         {
           headers: {
@@ -151,24 +153,19 @@ const VisorDocumentosOficios = ({
     console.log(v);
 
     if (v !== undefined && v != "") {
-      let peticiones: any[] = [];
       const formData = new FormData();
       formData.append("NUMOPERACION", "9");
       formData.append("FOLIO", explorerRoute);
       formData.append("P_ROUTE", explorerRoute + "/" + v);
 
       axios
-        .post(
-          "http://10.200.4.176:8585/api/pladi/" + "createfolder",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "X-Requested-With": "XMLHttpRequest",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
+        .post("http://localhost:8585/api/pladi/" + "createfolder", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-Requested-With": "XMLHttpRequest",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
         .then((response) => {
           if (response.data.SUCCESS) {
             console.log(response.data);
@@ -388,7 +385,7 @@ const VisorDocumentosOficios = ({
         <Grid container>
           <Grid item xs={12} sm={4} md={4} lg={4}>
             <>
-              {explorerRoute.includes("/") ? (
+              {permiso === "ADMIN" && explorerRoute.includes("/") ? (
                 <TooltipPersonalizado
                   title={
                     <React.Fragment>
@@ -416,57 +413,66 @@ const VisorDocumentosOficios = ({
               ) : (
                 ""
               )}
-
-              <TooltipPersonalizado
-                title={
-                  <React.Fragment>
-                    <Typography color="inherit">Cargar Documentos</Typography>
-                    {"Permite la carga de Documentos de Forma Masiva "}
-                  </React.Fragment>
-                }
-              >
-                <ToggleButton value="check">
-                  <IconButton
-                    color="primary"
-                    aria-label="upload documento"
-                    component="label"
-                    size="small"
+              {permiso === "ADMIN" ? (
+                <>
+                  <TooltipPersonalizado
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">
+                          Cargar Documentos
+                        </Typography>
+                        {"Permite la carga de Documentos de Forma Masiva "}
+                      </React.Fragment>
+                    }
                   >
-                    <input
-                      multiple
-                      hidden
-                      accept=".*"
-                      type="file"
-                      value=""
-                      onChange={(v) => ProcesaSPeis(v)}
-                    />
-                    <FileUploadIcon />
-                  </IconButton>
-                </ToggleButton>
-              </TooltipPersonalizado>
+                    <ToggleButton value="check">
+                      <IconButton
+                        color="primary"
+                        aria-label="upload documento"
+                        component="label"
+                        size="small"
+                      >
+                        <input
+                          multiple
+                          hidden
+                          accept=".*"
+                          type="file"
+                          value=""
+                          onChange={(v) => ProcesaSPeis(v)}
+                        />
+                        <FileUploadIcon />
+                      </IconButton>
+                    </ToggleButton>
+                  </TooltipPersonalizado>
 
-              <TooltipPersonalizado
-                title={
-                  <React.Fragment>
-                    <Typography color="inherit">Crear Directorio</Typography>
-                    {"Permite la creación de un Directorio"}
-                  </React.Fragment>
-                }
-              >
-                <ToggleButton value="check">
-                  <IconButton
-                    color="primary"
-                    aria-label="upload documento"
-                    component="label"
-                    size="small"
-                    onClick={() => {
-                      setopendialog(true);
-                    }}
+                  <TooltipPersonalizado
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">
+                          Crear Directorio
+                        </Typography>
+                        {"Permite la creación de un Directorio"}
+                      </React.Fragment>
+                    }
                   >
-                    <CreateNewFolderIcon />
-                  </IconButton>
-                </ToggleButton>
-              </TooltipPersonalizado>
+                    <ToggleButton value="check">
+                      <IconButton
+                        color="primary"
+                        aria-label="upload documento"
+                        component="label"
+                        size="small"
+                        onClick={() => {
+                          setopendialog(true);
+                        }}
+                      >
+                        <CreateNewFolderIcon />
+                      </IconButton>
+                    </ToggleButton>
+                  </TooltipPersonalizado>
+                </>
+              ) : (
+                ""
+              )}
             </>
 
             <MUIXDataGrid columns={columns} rows={data} />
