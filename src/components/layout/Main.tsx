@@ -323,6 +323,28 @@ const Main = () => {
                 />
               </ListItemButton>
             </Tooltip>
+            <Tooltip title={"Manual de Procedimiento de la Dirección"}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("mpd");
+                  navigate("/home/mpd");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "mpd" ? "#DBA901" : "transparent",
+                }}
+              >
+                <ListItemIcon>
+                  <ArticleIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Manual de Procedimiento de la Dirección"
+                  style={{
+                    color: selectedOption === "mpd" ? "#FFFFFF" : "",
+                  }}
+                />
+              </ListItemButton>
+            </Tooltip>
             <Tooltip
               title={
                 "Control y Administración de los Oficios Correspondientes a Auditorias"

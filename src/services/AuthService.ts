@@ -25,6 +25,10 @@ export class AuthService {
     return await post("PPI", data);
   }
 
+  public static async MPD(data: any) {
+    return await post("MPD", data);
+  }
+
   public static async AUDITORIA(data: any) {
     return await post("AUDITORIA", data);
   }
