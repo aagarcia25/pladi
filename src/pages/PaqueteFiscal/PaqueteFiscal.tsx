@@ -25,7 +25,8 @@ const PaqueteFiscal = ({
   };
 
   const handleVerSub = (v: any, tipo: string) => {
-    setidowner(v.row.Anio + "/LEY_" + tipo);
+    setidowner(v.row.Anio + "\\LEY_" + tipo);
+    //  setidowner(v.row.Anio + "/LEY_" + tipo);
     setopenModalFiles(true);
   };
 

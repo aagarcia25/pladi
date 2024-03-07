@@ -23,7 +23,8 @@ const Auditoria = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
     const fecha = new Date(`${anio}-${mes}-${dia}`);
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
-    setidowner("/AUDITORIA/FOLIOS/" + anioObtenido + "/" + v.row.Folio);
+    setidowner("\\AUDITORIA\\FOLIOS\\" + anioObtenido + "\\" + v.row.Folio);
+    //setidowner("/AUDITORIA/FOLIOS/" + anioObtenido + "/" + v.row.Folio);
     setopenModalFiles(true);
   };
 
@@ -34,11 +35,18 @@ const Auditoria = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
     setidowner(
-      "/AUDITORIA/CONTESTACION/" +
+      "\\AUDITORIA\\CONTESTACION\\" +
         anioObtenido +
-        "/" +
+        "\\" +
         v.row.NumOficioContestacion
     );
+
+    //  setidowner(
+    //    "/AUDITORIA/CONTESTACION/" +
+    //      anioObtenido +
+    //      "/" +
+    //      v.row.NumOficioContestacion
+    //  );
     setopenModalFiles(true);
   };
 

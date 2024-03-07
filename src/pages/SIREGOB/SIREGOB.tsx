@@ -97,7 +97,8 @@ const SIREGOB = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
 
   const handleVerEntregables = (v: any) => {
     console.log(v);
-    setidowner(v.row.Id + "/Entregables");
+    // setidowner(v.row.Id + "/Entregables");
+    setidowner(v.row.Id + "\\Entregables");
     setopenModalFiles(true);
   };
 
