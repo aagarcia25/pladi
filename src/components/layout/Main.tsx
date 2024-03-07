@@ -172,9 +172,9 @@ const Main = () => {
             <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.Nombre} {data!.ApellidoPaterno} {data!.ApellidoMaterno}
             </Grid>
-            <Grid item xs={1} style={{ fontSize: "15px" }}>
+            {/* <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.Puesto}
-            </Grid>
+            </Grid> */}
             <Grid item xs={1} style={{ fontSize: "15px" }}>
               {data!.CorreoElectronico}
             </Grid>
@@ -408,25 +408,16 @@ const Main = () => {
               </ListItemIcon>
               <ListItemText primary="Cerrar Sesión" />
             </ListItemButton>
+            <Divider></Divider>
           </List>
         </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
+        <Divider></Divider>
+        <div>
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4, width: "120%" }}>
+          <Container sx={{ mt: 1, mb: 1 }}>
             <Outlet />
           </Container>
-        </Box>
+        </div>
       </Box>
     </div>
   );
