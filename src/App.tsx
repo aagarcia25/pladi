@@ -21,10 +21,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="bus" element={<Busqueda />} />
             <Route path="inap" element={<Inap />} />
-            <Route path="siregob" element={<SIREGOB />} />
-            <Route path="ppi" element={<PPI />} />
-            <Route path="pf" element={<PaqueteFiscal />} />
-            <Route path="auditoria" element={<Auditoria />} />
+            <Route path="siregob" element={<SIREGOB tipo={"CONS"} />} />
+            <Route path="ppi" element={<PPI tipo={"CONS"} />} />
+            <Route path="pf" element={<PaqueteFiscal tipo={"CONS"} />} />
+            <Route path="auditoria" element={<Auditoria tipo={"CONS"} />} />
           </Route>
         </Routes>
       </BrowserRouter>

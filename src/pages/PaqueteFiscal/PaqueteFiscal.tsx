@@ -8,7 +8,13 @@ import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficio
 import { AuthService } from "../../services/AuthService";
 import Progress from "../../components/share/Progress";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
-const PaqueteFiscal = () => {
+const PaqueteFiscal = ({
+  tipo,
+  Busqueda,
+}: {
+  tipo: string;
+  Busqueda?: string;
+}) => {
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
   const [open, setopen] = useState(false);
@@ -19,9 +25,7 @@ const PaqueteFiscal = () => {
   };
 
   const handleVerSub = (v: any, tipo: string) => {
-    // console.log(v);
-    // console.log(v.row.Anio + "\\LEY_" + tipo);
-    setidowner(v.row.Anio + "\\LEY_" + tipo);
+    setidowner(v.row.Anio + "/LEY_" + tipo);
     setopenModalFiles(true);
   };
 
@@ -36,28 +40,6 @@ const PaqueteFiscal = () => {
       headerName: "Año",
       width: 150,
     },
-
-    // {
-    //   field: "acciones",
-    //   disableExport: true,
-    //   headerName: "Acciones",
-    //   description: "Campo de Acciones",
-    //   sortable: false,
-    //   width: 50,
-    //   renderCell: (v) => {
-    //     return (
-    //       <>
-    //         <ButtonsDetail
-    //           title={"Ver Carpeta"}
-    //           handleFunction={handleVerSub}
-    //           show={true}
-    //           icon={<DriveFolderUploadIcon />}
-    //           row={v}
-    //         ></ButtonsDetail>
-    //       </>
-    //     );
-    //   },
-    // },
 
     {
       field: "lingresos",
@@ -115,6 +97,9 @@ const PaqueteFiscal = () => {
         if (tipo == 4) {
           setrows(res.RESPONSE);
           setopen(false);
+        } else if (tipo == 5) {
+          setrows(res.RESPONSE);
+          setopen(false);
         }
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
@@ -123,8 +108,13 @@ const PaqueteFiscal = () => {
   };
 
   useEffect(() => {
-    ProcesaData(4);
-  }, []);
+    console.log(tipo);
+    if (tipo == "CONS") {
+      ProcesaData(4);
+    } else {
+      ProcesaData(5);
+    }
+  }, [Busqueda]);
   return (
     <div>
       <Progress open={open}></Progress>

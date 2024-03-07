@@ -7,7 +7,7 @@ import MsgAlert from "../../components/share/MsgAlert";
 import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
 import { AuthService } from "../../services/AuthService";
 import Progress from "../../components/share/Progress";
-const PPI = () => {
+const PPI = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
   const [open, setopen] = useState(false);
@@ -93,11 +93,15 @@ const PPI = () => {
     let data = {
       TIPO: tipo,
       P_Id: id,
+      BUSQUEDA: Busqueda,
     };
 
     AuthService.PPI(data).then((res) => {
       if (res.NUMCODE == 200) {
         if (tipo == 4) {
+          setrows(res.RESPONSE);
+          setopen(false);
+        } else if (tipo == 5) {
           setrows(res.RESPONSE);
           setopen(false);
         }
@@ -108,8 +112,13 @@ const PPI = () => {
   };
 
   useEffect(() => {
-    ProcesaData(4);
-  }, []);
+    console.log(tipo);
+    if (tipo == "CONS") {
+      ProcesaData(4);
+    } else {
+      ProcesaData(5);
+    }
+  }, [Busqueda]);
   return (
     <div>
       <Progress open={open}></Progress>

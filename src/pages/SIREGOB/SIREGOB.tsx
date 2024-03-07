@@ -7,9 +7,10 @@ import MUIXDataGrid from "../../components/share/MUIXDataGrid";
 import MsgAlert from "../../components/share/MsgAlert";
 import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
 import { AuthService } from "../../services/AuthService";
-const SIREGOB = () => {
+import Progress from "../../components/share/Progress";
+const SIREGOB = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
   const [rows, setrows] = useState([]);
-
+  const [open, setopen] = useState(false);
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
 
@@ -96,7 +97,7 @@ const SIREGOB = () => {
 
   const handleVerEntregables = (v: any) => {
     console.log(v);
-    setidowner(v.row.Id + "\\Entregables");
+    setidowner(v.row.Id + "/Entregables");
     setopenModalFiles(true);
   };
 
@@ -104,12 +105,17 @@ const SIREGOB = () => {
     let data = {
       TIPO: tipo,
       P_Id: id,
+      BUSQUEDA: Busqueda,
     };
 
     AuthService.siregob(data).then((res) => {
       if (res.NUMCODE === 200) {
-        if (tipo === 1) {
+        if (tipo == 1) {
           setrows(res.RESPONSE);
+          setopen(false);
+        } else if (tipo == 5) {
+          setrows(res.RESPONSE);
+          setopen(false);
         }
       } else {
         MsgAlert("Error", res.STRMESSAGE, "error");
@@ -118,11 +124,17 @@ const SIREGOB = () => {
   };
 
   useEffect(() => {
-    ProcesaData(1);
-  }, []);
+    console.log(tipo);
+    if (tipo == "CONS") {
+      ProcesaData(1);
+    } else {
+      ProcesaData(5);
+    }
+  }, [Busqueda]);
 
   return (
     <div>
+      <Progress open={open}></Progress>
       <MUIXDataGrid columns={columns} rows={rows} />
 
       {openModalFiles ? (

@@ -10,7 +10,7 @@ import React from "react";
 
 const theme = createTheme(coreEsES, gridEsES);
 
-export default function MUIXDataGrid(props: any) {
+export default function MUIXDataGridSimple(props: any) {
   const [pageSize, setPageSize] = React.useState(10);
 
   const [columnVisibilityModel, setColumnVisibilityModel] =
@@ -38,7 +38,6 @@ export default function MUIXDataGrid(props: any) {
           disableSelectionOnClick
           disableDensitySelector
           getRowId={(row) => (row.Id ? row.Id : row.id)}
-          rowHeight={255}
           pageSize={pageSize}
           getRowHeight={() => "auto"}
           sx={{

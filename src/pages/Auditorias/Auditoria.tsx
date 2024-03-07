@@ -7,8 +7,7 @@ import MsgAlert from "../../components/share/MsgAlert";
 import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
 import { AuthService } from "../../services/AuthService";
 import Progress from "../../components/share/Progress";
-import { formatFecha } from "../../utils/FormatDate";
-const Auditoria = () => {
+const Auditoria = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
   const [open, setopen] = useState(false);
@@ -24,7 +23,7 @@ const Auditoria = () => {
     const fecha = new Date(`${anio}-${mes}-${dia}`);
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
-    setidowner("\\AUDITORIA\\FOLIOS\\" + anioObtenido + "\\" + v.row.Folio);
+    setidowner("/AUDITORIA/FOLIOS/" + anioObtenido + "/" + v.row.Folio);
     setopenModalFiles(true);
   };
 
@@ -35,9 +34,9 @@ const Auditoria = () => {
     const anioObtenido = fecha.getFullYear();
     console.log(anioObtenido);
     setidowner(
-      "\\AUDITORIA\\CONTESTACION\\" +
+      "/AUDITORIA/CONTESTACION/" +
         anioObtenido +
-        "\\" +
+        "/" +
         v.row.NumOficioContestacion
     );
     setopenModalFiles(true);
@@ -223,11 +222,15 @@ const Auditoria = () => {
     let data = {
       TIPO: tipo,
       P_Id: id,
+      BUSQUEDA: Busqueda,
     };
 
     AuthService.AUDITORIA(data).then((res) => {
       if (res.NUMCODE == 200) {
         if (tipo == 4) {
+          setrows(res.RESPONSE);
+          setopen(false);
+        } else if (tipo == 5) {
           setrows(res.RESPONSE);
           setopen(false);
         }
@@ -238,10 +241,15 @@ const Auditoria = () => {
   };
 
   useEffect(() => {
-    ProcesaData(4);
-  }, []);
+    console.log(tipo);
+    if (tipo == "CONS") {
+      ProcesaData(4);
+    } else {
+      ProcesaData(5);
+    }
+  }, [Busqueda]);
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <Progress open={open}></Progress>
       <MUIXDataGrid columns={columns} rows={rows} />
 
