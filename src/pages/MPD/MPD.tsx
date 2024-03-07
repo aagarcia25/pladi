@@ -33,7 +33,7 @@ const MPD = ({ tipo, Busqueda }: { tipo: string; Busqueda?: string }) => {
     {
       field: "Dependencia",
       headerName: "Área",
-      width: 150,
+      width: 350,
     },
 
     {
