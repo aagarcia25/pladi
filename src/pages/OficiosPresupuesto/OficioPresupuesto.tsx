@@ -87,8 +87,26 @@ const OficioPresupuesto = ({
       headerName: "Fecha de Vencimiento",
       width: 180,
     },
-    { field: "Monto", headerName: "Monto", width: 120 },
-    { field: "MontoAmpliacion", headerName: "Monto de Ampliacion", width: 180 },
+    {
+      field: "Monto",
+      headerName: "Monto",
+      width: 120,
+      valueFormatter: (params) =>
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(params.value),
+    },
+    {
+      field: "MontoAmpliacion",
+      headerName: "Monto de Ampliacion",
+      width: 180,
+      valueFormatter: (params) =>
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(params.value),
+    },
     { field: "Comentarios", headerName: "Comentarios", width: 500 },
     { field: "FechaTurno", headerName: "Fecha en que se Turno", width: 200 },
     {
@@ -106,6 +124,7 @@ const OficioPresupuesto = ({
     let data = {
       TIPO: tipo,
       P_Id: id,
+      BUSQUEDA: Busqueda,
     };
 
     AuthService.presupuesto(data).then((res) => {

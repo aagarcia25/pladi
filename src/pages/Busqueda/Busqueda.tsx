@@ -17,6 +17,7 @@ import PPI from "../ProyectoInversion/PPI";
 import SIREGOB from "../SIREGOB/SIREGOB";
 import MsgAlert from "../../components/share/MsgAlert";
 import VisorDocumentosOficios from "../../components/share/VisorDocumentosOficios";
+import OficioPresupuesto from "../OficiosPresupuesto/OficioPresupuesto";
 const Busqueda = () => {
   const [idowner, setidowner] = useState<string>("");
   const [openModalFiles, setopenModalFiles] = useState(false);
@@ -305,7 +306,10 @@ const Busqueda = () => {
           >
             Oficios Presupuesto
           </Typography>
-          {/* <MUIXDataGridSimple columns={columns} rows={data} /> */}
+          <OficioPresupuesto
+            tipo={"BUS"}
+            Busqueda={busqueda}
+          ></OficioPresupuesto>
         </Grid>
 
         {/* <Grid item xs={12} sm={4} md={4} lg={4} paddingTop={"20px"}>
