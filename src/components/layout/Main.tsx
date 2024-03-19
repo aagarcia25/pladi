@@ -238,40 +238,33 @@ const Main = () => {
 
             <Tooltip
               title={
-                "Control y Administración de los Oficios Correspondientes a Auditorias"
+                "Control y Administración de los Oficios Correspondientes a Presupuesto"
               }
             >
-              <ListItemButton onClick={() => handleClick(1)}>
+              <ListItemButton
+                onClick={() => {
+                  setSelectedOption("presupuesto");
+                  navigate("/home/presupuesto");
+                }}
+                style={{
+                  backgroundColor:
+                    selectedOption === "presupuesto"
+                      ? "#DBA901"
+                      : "transparent",
+                }}
+              >
                 <ListItemIcon>
                   <ArticleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Oficios Presupuesto" />
-                {openMenus[1] ? <ExpandLess /> : <ExpandMore />}
+                <ListItemText
+                  primary="Oficios Presupuestos"
+                  style={{
+                    color: selectedOption === "presupuesto" ? "#FFFFFF" : "",
+                  }}
+                />
               </ListItemButton>
             </Tooltip>
-            <Collapse in={openMenus[1]} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Federales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Generados" />
-                </ListItemButton>
 
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => navigate("/home/Estatales")}
-                >
-                  <ListItemIcon>
-                    <FiberManualRecordIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Recibidos" />
-                </ListItemButton>
-              </List>
-            </Collapse>
             <Tooltip
               title={
                 "Control y Administración de los Oficios Correspondientes a Municipios"

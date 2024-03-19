@@ -60,4 +60,8 @@ export class AuthService {
   public static async getFileBusqueda(data: any) {
     return await post("getFileBusqueda", data);
   }
+
+  public static async presupuesto(data: any) {
+    return await post("presupuesto", data);
+  }
 }

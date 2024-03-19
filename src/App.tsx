@@ -10,6 +10,7 @@ import PPI from "./pages/ProyectoInversion/PPI";
 import SIREGOB from "./pages/SIREGOB/SIREGOB";
 import SignIn from "./pages/SignIn";
 import MPD from "./pages/MPD/MPD";
+import OficioPresupuesto from "./pages/OficiosPresupuesto/OficioPresupuesto";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
             <Route path="pf" element={<PaqueteFiscal tipo={"CONS"} />} />
             <Route path="mpd" element={<MPD tipo={"CONS"} />} />
             <Route path="auditoria" element={<Auditoria tipo={"CONS"} />} />
+            <Route
+              path="presupuesto"
+              element={<OficioPresupuesto tipo={"CONS"} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
