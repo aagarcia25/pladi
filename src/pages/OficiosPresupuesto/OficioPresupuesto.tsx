@@ -25,7 +25,12 @@ const OficioPresupuesto = ({
   };
 
   const handleVerSub = (v: any) => {
-    setidowner("\\PRESUPUESTOS_OFICIO\\" + v.row.id);
+    setidowner("\\OP\\" + v.row.Anio + "\\SOL\\" + v.row.Folio);
+    setopenModalFiles(true);
+  };
+
+  const handleVerSubrespuesta = (v: any) => {
+    setidowner("\\OP\\" + v.row.Anio + "\\RESP\\" + v.row.OficioRespuesta);
     setopenModalFiles(true);
   };
 
@@ -46,12 +51,24 @@ const OficioPresupuesto = ({
         return (
           <>
             <ButtonsDetail
-              title={"Ver Carpeta"}
+              title={"Ver Oficio"}
               handleFunction={() => handleVerSub(v)}
               show={true}
               icon={<FilePresentIcon />}
               row={v}
             ></ButtonsDetail>
+
+            {v.row.OficioRespuesta ? (
+              <ButtonsDetail
+                title={"Ver Oficio de Respuesta"}
+                handleFunction={() => handleVerSubrespuesta(v)}
+                show={true}
+                icon={<FilePresentIcon />}
+                row={v}
+              ></ButtonsDetail>
+            ) : (
+              ""
+            )}
           </>
         );
       },
